@@ -6,6 +6,8 @@
 - Netlify — https://shakh-i-mat.netlify.app/
 - GitHub Pages — https://SpellRey.github.io/shakh-i-mat/
 
+![Головна сторінка сайту](docs/screenshot-home.png)
+
 ## Можливості
 
 - **Каталог ігор** — фільтри за жанром, кількістю гравців і ціною, пошук, сортування; сторінка гри зі схожими іграми.
