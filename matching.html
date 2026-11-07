@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Матчинг: знайди суперника для настільних ігор | Шах і Мат</title>
+  <meta name="description" content="Знайди суперника для шахів і настільних ігор у своєму гуртожитку: фільтри за грою, рівнем, часом і гуртожитком.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="Шах і Мат">
+  <meta property="og:title" content="Матчинг: знайди суперника для настільних ігор | Шах і Мат">
+  <meta property="og:description" content="Знайди суперника для шахів і настільних ігор у своєму гуртожитку: фільтри за грою, рівнем, часом і гуртожитком.">
+  <meta name="theme-color" content="#0b0b1a">
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+
+  <!-- Тема (світла/темна) застосовується ще до рендерингу, щоб сторінка не «блимала» -->
+  <script src="js/theme-init.js"></script>
+
+  <!-- Шрифти: Playfair Display — заголовки, Inter — текст -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Іконки Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <!-- Tailwind CSS (CDN) + спільна тема дизайн-системи для всіх сторінок -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/tailwind-config.js"></script>
+
+  <!-- Власні стилі: кольори тем через CSS-змінні, фон, фокус -->
+  <link rel="stylesheet" href="css/custom-styles.css">
+
+  <!-- defer: скрипти виконуються після побудови DOM і не блокують рендеринг -->
+  <script src="js/data.js" defer></script>
+  <script src="js/menu.js" defer></script>
+  <script src="js/theme.js" defer></script>
+  <script src="js/pages.js" defer></script>
+</head>
+<body data-page="matching" class="page-inner bg-night-deep font-sans text-base leading-normal text-ink antialiased">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-[100] focus:rounded-lg focus:bg-secondary focus:px-4 focus:py-2 focus:text-night">Перейти до основного вмісту</a>
+
+  <!-- ================= ШАПКА: однакова на всіх сторінках ================= -->
+  <header class="sticky top-0 z-50 border-b border-line bg-night/90 backdrop-blur-md">
+    <div class="mx-auto flex w-full max-w-container flex-wrap items-center justify-between gap-x-4 px-4 py-2 sm:px-8 lg:flex-nowrap">
+      <a href="index.html" class="shrink-0 rounded-lg transition hover:drop-shadow-[0_0_12px_rgb(255_46_99/0.6)]">
+        <!-- два варіанти логотипа: у світлій темі «дірка» в букві «а» світла (CSS показує потрібний) -->
+        <img src="assets/images/logo.svg" alt="Шах і Мат — на головну" width="176" height="173" class="logo-dark h-14 w-auto lg:h-[72px]">
+        <img src="assets/images/logo-light.svg" alt="Шах і Мат — на головну" width="176" height="173" class="logo-light h-14 w-auto lg:h-[72px]">
+      </a>
+
+      <!-- Перемикач теми + «бургер» (до 1024px) -->
+      <div class="flex items-center gap-2 lg:order-last lg:ml-4">
+        <button id="theme-toggle" type="button" class="grid h-11 w-11 place-items-center rounded-full border border-line text-lg transition duration-200 hover:border-secondary hover:text-secondary hover:shadow-neon-cyan-sm" aria-label="Увімкнути світлу тему" aria-pressed="false">
+          <i class="fa-solid fa-sun theme-icon-sun" aria-hidden="true"></i>
+          <i class="fa-solid fa-moon theme-icon-moon" aria-hidden="true"></i>
+        </button>
+        <button id="menu-toggle" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-line text-xl transition hover:border-secondary hover:text-secondary lg:hidden" aria-controls="site-menu" aria-expanded="false" aria-label="Відкрити меню">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div id="site-menu" class="hidden w-full pb-4 lg:flex lg:w-auto lg:flex-1 lg:items-center lg:justify-between lg:pb-0">
+        <nav aria-label="Основна навігація" class="lg:mx-auto">
+          <ul class="flex flex-col py-2 text-lg lg:flex-row lg:gap-8 lg:py-0">
+            <li><a class="relative block rounded-lg px-2 py-3 transition duration-200 hover:text-secondary hover:[text-shadow:0_0_12px_rgb(var(--c-secondary)/0.75)] lg:p-1 lg:after:absolute lg:after:inset-x-1 lg:after:-bottom-1 lg:after:h-0.5 lg:after:origin-left lg:after:scale-x-0 lg:after:rounded-full lg:after:bg-secondary lg:after:shadow-neon-cyan-sm lg:after:transition-transform lg:after:duration-300 lg:hover:after:scale-x-100 motion-reduce:lg:after:transition-none" href="index.html">Головна</a></li>
+            <li><a class="relative block rounded-lg px-2 py-3 transition duration-200 hover:text-secondary hover:[text-shadow:0_0_12px_rgb(var(--c-secondary)/0.75)] lg:p-1 lg:after:absolute lg:after:inset-x-1 lg:after:-bottom-1 lg:after:h-0.5 lg:after:origin-left lg:after:scale-x-0 lg:after:rounded-full lg:after:bg-secondary lg:after:shadow-neon-cyan-sm lg:after:transition-transform lg:after:duration-300 lg:hover:after:scale-x-100 motion-reduce:lg:after:transition-none" href="catalog.html">Оренда</a></li>
+            <li><a class="relative block rounded-lg px-2 py-3 transition duration-200 hover:text-secondary hover:[text-shadow:0_0_12px_rgb(var(--c-secondary)/0.75)] lg:p-1 lg:after:absolute lg:after:inset-x-1 lg:after:-bottom-1 lg:after:h-0.5 lg:after:origin-left lg:after:scale-x-0 lg:after:rounded-full lg:after:bg-secondary lg:after:shadow-neon-cyan-sm lg:after:transition-transform lg:after:duration-300 lg:hover:after:scale-x-100 motion-reduce:lg:after:transition-none" href="tournaments.html">Турніри</a></li>
+            <li><a class="relative block rounded-lg px-2 py-3 transition duration-200 hover:text-secondary hover:[text-shadow:0_0_12px_rgb(var(--c-secondary)/0.75)] lg:p-1 lg:after:absolute lg:after:inset-x-1 lg:after:-bottom-1 lg:after:h-0.5 lg:after:origin-left lg:after:scale-x-0 lg:after:rounded-full lg:after:bg-secondary lg:after:shadow-neon-cyan-sm lg:after:transition-transform lg:after:duration-300 lg:hover:after:scale-x-100 motion-reduce:lg:after:transition-none text-secondary lg:after:scale-x-100" href="matching.html" aria-current="page">Матчинг</a></li>
+          </ul>
+        </nav>
+        <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none w-full lg:w-auto" href="login.html">Увійти</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="mx-auto w-full max-w-container px-4 pb-20 pt-10 sm:px-8 md:pt-14">
+    <h1 class="font-heading text-[2rem] font-bold leading-tight tracking-tight md:text-[2.75rem]">Матчинг</h1>
+    <p class="mt-3 max-w-[65ch] text-lg text-muted">Знайди суперника для настільної гри у своєму гуртожитку, вибери рівень і зручний час.</p>
+
+    <!-- Фільтри оновлюють список одразу; «Швидкий пошук» без результатів веде на сторінку «Немає гравців» -->
+    <form id="match-filters" class="mt-10 rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8" aria-labelledby="mf-title">
+      <h2 id="mf-title" class="text-2xl font-semibold">Панель фільтрів</h2>
+      <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="flex flex-col gap-2">
+            <label for="mf-game" class="text-sm font-semibold text-muted">Гра</label>
+            <select id="mf-game" name="game" class="min-h-[48px] w-full rounded-xl border border-line bg-night/60 px-4 text-ink placeholder:text-muted/70 transition focus:border-secondary">
+              <option value="any">Усі ігри</option><option value="chess">Шахи</option><option value="carcassonne">Каркассон</option><option value="pandemic">Пандемія</option><option value="taboo">Табу</option><option value="monopoly">Монополія</option><option value="dixit">Діксіт</option><option value="catan">Катан</option><option value="dobble">Доббл</option><option value="codenames">Коднеймс</option>
+            </select>
+          </div>
+        <div class="flex flex-col gap-2">
+            <label for="mf-level" class="text-sm font-semibold text-muted">Рівень досвіду</label>
+            <select id="mf-level" name="level" class="min-h-[48px] w-full rounded-xl border border-line bg-night/60 px-4 text-ink placeholder:text-muted/70 transition focus:border-secondary">
+              <option value="any">Будь-який рівень</option><option value="Початківець">Початківець</option><option value="Середній">Середній</option><option value="Досвідчений">Досвідчений</option>
+            </select>
+          </div>
+        <div class="flex flex-col gap-2">
+            <label for="mf-time" class="text-sm font-semibold text-muted">Зручний час</label>
+            <select id="mf-time" name="time" class="min-h-[48px] w-full rounded-xl border border-line bg-night/60 px-4 text-ink placeholder:text-muted/70 transition focus:border-secondary">
+              <option value="any">Будь-коли</option><option value="День">День, 12:00–17:00</option><option value="Вечір">Вечір, 18:00–22:00</option><option value="Вихідні">Вихідні</option>
+            </select>
+          </div>
+        <div class="flex flex-col gap-2">
+            <label for="mf-dorm" class="text-sm font-semibold text-muted">Гуртожиток</label>
+            <select id="mf-dorm" name="dorm" class="min-h-[48px] w-full rounded-xl border border-line bg-night/60 px-4 text-ink placeholder:text-muted/70 transition focus:border-secondary">
+              <option value="any">Будь-який</option><option value="Гуртожиток №2">Гуртожиток №2</option><option value="Гуртожиток №4">Гуртожиток №4</option><option value="Гуртожиток №5">Гуртожиток №5</option>
+            </select>
+          </div>
+      </div>
+      <div class="mt-6 flex justify-end">
+        <button type="submit" class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-6 py-4 text-lg sm:px-10 sm:text-xl font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Швидкий пошук</button>
+      </div>
+    </form>
+
+    <section class="mt-12" aria-labelledby="players-title">
+      <h2 id="players-title" class="mb-6 text-2xl font-semibold">Суперники · знайдено <span id="players-count" aria-live="polite">5</span></h2>
+      <ul id="players" class="flex flex-col gap-4">
+        <li data-id="koval" data-games="chess carcassonne taboo" data-level="Початківець" data-time="Вечір" data-dorm="Гуртожиток №4"
+            class="group flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 sm:flex-row sm:items-center transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+          <span class="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-secondary/15 text-lg font-bold text-secondary transition duration-300 group-hover:bg-secondary group-hover:text-night group-hover:shadow-neon-cyan-sm" aria-hidden="true">АК</span>
+          <div class="flex flex-1 flex-col">
+            <h3 class="text-xl font-semibold">Анна Коваль</h3>
+            <p class="text-sm text-muted">Улюблені ігри: Шахи, Каркассон, Табу · Початківець · Гуртожиток №4 · Вечір, 18:00–22:00</p>
+          </div>
+          <p class="flex flex-col sm:mr-6"><span class="text-xs font-semibold text-muted">Рейтинг</span><span class="text-xl font-bold">4.6 / 5</span></p>
+          <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none" href="match-invite.html?player=koval&amp;game=chess">Запросити<span class="sr-only"> гравця Анна Коваль</span></a>
+        </li>
+        <li data-id="savchenko" data-games="pandemic" data-level="Середній" data-time="Вечір" data-dorm="Гуртожиток №5"
+            class="group flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 sm:flex-row sm:items-center transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+          <span class="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-secondary/15 text-lg font-bold text-secondary transition duration-300 group-hover:bg-secondary group-hover:text-night group-hover:shadow-neon-cyan-sm" aria-hidden="true">МС</span>
+          <div class="flex flex-1 flex-col">
+            <h3 class="text-xl font-semibold">Максим Савченко</h3>
+            <p class="text-sm text-muted">Улюблені ігри: Пандемія · Середній · Гуртожиток №5 · Вечір, 18:00–22:00</p>
+          </div>
+          <p class="flex flex-col sm:mr-6"><span class="text-xs font-semibold text-muted">Рейтинг</span><span class="text-xl font-bold">4.9 / 5</span></p>
+          <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none" href="match-invite.html?player=savchenko&amp;game=pandemic">Запросити<span class="sr-only"> гравця Максим Савченко</span></a>
+        </li>
+        <li data-id="melnyk" data-games="codenames carcassonne" data-level="Початківець" data-time="День" data-dorm="Гуртожиток №2"
+            class="group flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 sm:flex-row sm:items-center transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+          <span class="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-secondary/15 text-lg font-bold text-secondary transition duration-300 group-hover:bg-secondary group-hover:text-night group-hover:shadow-neon-cyan-sm" aria-hidden="true">ІМ</span>
+          <div class="flex flex-1 flex-col">
+            <h3 class="text-xl font-semibold">Ілля Мельник</h3>
+            <p class="text-sm text-muted">Улюблені ігри: Коднеймс, Каркассон · Початківець · Гуртожиток №2 · День, 12:00–17:00</p>
+          </div>
+          <p class="flex flex-col sm:mr-6"><span class="text-xs font-semibold text-muted">Рейтинг</span><span class="text-xl font-bold">3.0 / 5</span></p>
+          <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none" href="match-invite.html?player=melnyk&amp;game=codenames">Запросити<span class="sr-only"> гравця Ілля Мельник</span></a>
+        </li>
+        <li data-id="kravchenko" data-games="chess" data-level="Досвідчений" data-time="Вечір" data-dorm="Гуртожиток №4"
+            class="group flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 sm:flex-row sm:items-center transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+          <span class="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-secondary/15 text-lg font-bold text-secondary transition duration-300 group-hover:bg-secondary group-hover:text-night group-hover:shadow-neon-cyan-sm" aria-hidden="true">ДК</span>
+          <div class="flex flex-1 flex-col">
+            <h3 class="text-xl font-semibold">Дарина Кравченко</h3>
+            <p class="text-sm text-muted">Улюблені ігри: Шахи · Досвідчений · Гуртожиток №4 · Вечір, 18:00–22:00</p>
+          </div>
+          <p class="flex flex-col sm:mr-6"><span class="text-xs font-semibold text-muted">Рейтинг</span><span class="text-xl font-bold">4.3 / 5</span></p>
+          <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none" href="match-invite.html?player=kravchenko&amp;game=chess">Запросити<span class="sr-only"> гравця Дарина Кравченко</span></a>
+        </li>
+        <li data-id="tkachenko" data-games="taboo monopoly" data-level="Середній" data-time="Вихідні" data-dorm="Гуртожиток №5"
+            class="group flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 sm:flex-row sm:items-center transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+          <span class="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-secondary/15 text-lg font-bold text-secondary transition duration-300 group-hover:bg-secondary group-hover:text-night group-hover:shadow-neon-cyan-sm" aria-hidden="true">СТ</span>
+          <div class="flex flex-1 flex-col">
+            <h3 class="text-xl font-semibold">Сергій Ткаченко</h3>
+            <p class="text-sm text-muted">Улюблені ігри: Табу, Монополія · Середній · Гуртожиток №5 · Вихідні, будь-коли</p>
+          </div>
+          <p class="flex flex-col sm:mr-6"><span class="text-xs font-semibold text-muted">Рейтинг</span><span class="text-xl font-bold">4.7 / 5</span></p>
+          <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none" href="match-invite.html?player=tkachenko&amp;game=taboo">Запросити<span class="sr-only"> гравця Сергій Ткаченко</span></a>
+        </li>
+      </ul>
+      <p id="players-empty" class="rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8 text-center text-muted" hidden>За цими фільтрами нікого немає. Натисни «Швидкий пошук», щоб побачити варіанти.</p>
+    </section>
+    <p class="mt-8 text-xs text-muted">* Ціни, профілі та турніри — приклади для демонстрації структури сайту.</p>
+  </main>
+
+  <!-- ================= ПІДВАЛ: завжди темний (data-theme="dark") ================= -->
+  <footer data-theme="dark" class="relative bg-night-soft pb-8 pt-16 text-sm text-muted">
+    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-secondary to-transparent opacity-70" aria-hidden="true"></div>
+    <div class="mx-auto w-full max-w-container px-4 sm:px-8">
+      <div class="grid gap-10 pb-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="flex flex-col gap-6 sm:col-span-2 lg:pr-24">
+          <a href="index.html" class="flex items-center gap-3 text-xl font-bold text-ink">
+            <img src="assets/images/logo.svg" alt="" width="176" height="173" class="h-12 w-auto" loading="lazy">
+            <span>Шах і Мат</span>
+          </a>
+          <p class="text-base">Платформа для студентів, щоб знайти суперника, орендувати нову гру або зіграти в турнір.</p>
+        </div>
+
+        <nav aria-labelledby="footer-nav-title">
+          <h2 id="footer-nav-title" class="mb-4 text-base font-semibold text-ink">Навігація</h2>
+          <ul class="flex flex-col gap-1">
+            <li><a class="inline-block py-2 transition hover:text-secondary" href="index.html">Головна</a></li>
+            <li><a class="inline-block py-2 transition hover:text-secondary" href="matching.html">Матчинг</a></li>
+            <li><a class="inline-block py-2 transition hover:text-secondary" href="catalog.html">Оренда</a></li>
+            <li><a class="inline-block py-2 transition hover:text-secondary" href="tournaments.html">Турніри</a></li>
+            <li><a class="inline-block py-2 transition hover:text-secondary" href="credits.html">Джерела фото</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h2 class="mb-4 text-base font-semibold text-ink">Контакти</h2>
+          <address class="flex flex-col gap-1 not-italic">
+            <a class="inline-flex items-center gap-2 py-2 transition hover:text-secondary" href="mailto:support@shakhimat.ua"><i class="fa-solid fa-envelope" aria-hidden="true"></i> support@shakhimat.ua</a>
+            <a class="inline-flex items-center gap-2 py-2 transition hover:text-secondary" href="tel:+380320000000"><i class="fa-solid fa-phone" aria-hidden="true"></i> +380 32 000 00 00</a>
+          </address>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <p>© 2026 Шах і Мат. Усі права захищені.</p>
+        <nav aria-label="Ми в соцмережах">
+          <ul class="flex flex-wrap gap-6">
+            <li><a class="inline-flex items-center gap-2 py-2 transition hover:text-secondary" href="https://www.instagram.com/" target="_blank" rel="noopener"><i class="fa-brands fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+            <li><a class="inline-flex items-center gap-2 py-2 transition hover:text-secondary" href="https://t.me/" target="_blank" rel="noopener"><i class="fa-brands fa-telegram" aria-hidden="true"></i> Telegram</a></li>
+            <li><a class="inline-flex items-center gap-2 py-2 transition hover:text-secondary" href="https://www.facebook.com/" target="_blank" rel="noopener"><i class="fa-brands fa-facebook" aria-hidden="true"></i> Facebook</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

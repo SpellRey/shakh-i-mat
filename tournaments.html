@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Турніри з шахів і настільних ігор у гуртожитках | Шах і Мат</title>
+  <meta name="description" content="Розклад студентських турнірів з шахів, Каркассона, Коднеймс і Пандемії в гуртожитках, призові фонди та правила участі.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="Шах і Мат">
+  <meta property="og:title" content="Турніри з шахів і настільних ігор у гуртожитках | Шах і Мат">
+  <meta property="og:description" content="Розклад студентських турнірів з шахів, Каркассона, Коднеймс і Пандемії в гуртожитках, призові фонди та правила участі.">
+  <meta name="theme-color" content="#0b0b1a">
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+
+  <!-- Тема (світла/темна) застосовується ще до рендерингу, щоб сторінка не «блимала» -->
+  <script src="js/theme-init.js"></script>
+
+  <!-- Шрифти: Playfair Display — заголовки, Inter — текст -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Іконки Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <!-- Tailwind CSS (CDN) + спільна тема дизайн-системи для всіх сторінок -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/tailwind-config.js"></script>
+
+  <!-- Власні стилі: кольори тем через CSS-змінні, фон, фокус -->
+  <link rel="stylesheet" href="css/custom-styles.css">
+
+  <!-- defer: скрипти виконуються після побудови DOM і не блокують рендеринг -->
+  <script src="js/data.js" defer></script>
+  <script src="js/menu.js" defer></script>
+  <script src="js/theme.js" defer></script>
+  <script src="js/pages.js" defer></script>
+</head>
+<body data-page="tournaments" class="page-inner bg-night-deep font-sans text-base leading-normal text-ink antialiased">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-[100] focus:rounded-lg focus:bg-secondary focus:px-4 focus:py-2 focus:text-night">Перейти до основного вмісту</a>
+
+  <!-- ================= ШАПКА: однакова на всіх сторінках ================= -->
+  <header class="sticky top-0 z-50 border-b border-line bg-night/90 backdrop-blur-md">
+    <div class="mx-auto flex w-full max-w-container flex-wrap items-center justify-between gap-x-4 px-4 py-2 sm:px-8 lg:flex-nowrap">
+      <a href="index.html" class="shrink-0 rounded-lg transition hover:drop-shadow-[0_0_12px_rgb(255_46_99/0.6)]">
+        <!-- два варіанти логотипа: у світлій темі «дірка» в букві «а» світла (CSS показує потрібний) -->
+        <img src="assets/images/logo.svg" alt="Шах і Мат — на головну" width="176" height="173" class="logo-dark h-14 w-auto lg:h-[72px]">
+        <img src="assets/images/logo-light.svg" alt="Шах і Мат — на головну" width="176" height="173" class="logo-light h-14 w-auto lg:h-[72px]">
+      </a>
+
+      <!-- Перемикач теми + «бургер» (до 1024px) -->
+      <div class="flex items-center gap-2 lg:order-last lg:ml-4">
+        <button id="theme-toggle" type="button" class="grid h-11 w-11 place-items-center rounded-full border border-line text-lg transition duration-200 hover:border-secondary hover:text-secondary hover:shadow-neon-cyan-sm" aria-label="Увімкнути світлу тему" aria-pressed="false">
+          <i class="fa-solid fa-sun theme-icon-sun" aria-hidden="true"></i>
+          <i class="fa-solid fa-moon theme-icon-moon" aria-hidden="true"></i>
+        </button>
+        <button id="menu-toggle" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-line text-xl transition hover:border-secondary hover:text-secondary lg:hidden" aria-controls="site-menu" aria-expanded="false" aria-label="Відкрити меню">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div id="site-menu" class="hidden w-full pb-4 lg:flex lg:w-auto lg:flex-1 lg:items-center lg:justify-between lg:pb-0">
+        <nav aria-label="Основна навігація" class="lg:mx-auto">
+          <ul class="flex flex-col py-2 text-lg lg:flex-row lg:gap-8 lg:py-0">
+            <li><a class="relative block rounded-lg px-2 py-3 transition duration-200 hover:text-secondary hover:[text-shadow:0_0_12px_rgb(var(--c-secondary)/0.75)] lg:p-1 lg:after:absolute lg:after:inset-x-1 lg:after:-bottom-1 lg:after:h-0.5 lg:after:origin-left lg:after:scale-x-0 lg:after:rounded-full lg:after:bg-secondary lg:after:shadow-neon-cyan-sm lg:after:transition-transform lg:after:duration-300 lg:hover:after:scale-x-100 motion-reduce:lg:after:transition-none" href="index.html">Головна</a></li>
+            <li><a class="relative block rounded-lg px-2 py-3 transition duration-200 hover:text-secondary hover:[text-shadow:0_0_12px_rgb(var(--c-secondary)/0.75)] lg:p-1 lg:after:absolute lg:after:inset-x-1 lg:after:-bottom-1 lg:after:h-0.5 lg:after:origin-left lg:after:scale-x-0 lg:after:rounded-full lg:after:bg-secondary lg:after:shadow-neon-cyan-sm lg:after:transition-transform lg:after:duration-300 lg:hover:after:scale-x-100 motion-reduce:lg:after:transition-none" href="catalog.html">Оренда</a></li>
+            <li><a class="relative block rounded-lg px-2 py-3 transition duration-200 hover:text-secondary hover:[text-shadow:0_0_12px_rgb(var(--c-secondary)/0.75)] lg:p-1 lg:after:absolute lg:after:inset-x-1 lg:after:-bottom-1 lg:after:h-0.5 lg:after:origin-left lg:after:scale-x-0 lg:after:rounded-full lg:after:bg-secondary lg:after:shadow-neon-cyan-sm lg:after:transition-transform lg:after:duration-300 lg:hover:after:scale-x-100 motion-reduce:lg:after:transition-none text-secondary lg:after:scale-x-100" href="tournaments.html" aria-current="page">Турніри</a></li>
+            <li><a class="relative block rounded-lg px-2 py-3 transition duration-200 hover:text-secondary hover:[text-shadow:0_0_12px_rgb(var(--c-secondary)/0.75)] lg:p-1 lg:after:absolute lg:after:inset-x-1 lg:after:-bottom-1 lg:after:h-0.5 lg:after:origin-left lg:after:scale-x-0 lg:after:rounded-full lg:after:bg-secondary lg:after:shadow-neon-cyan-sm lg:after:transition-transform lg:after:duration-300 lg:hover:after:scale-x-100 motion-reduce:lg:after:transition-none" href="matching.html">Матчинг</a></li>
+          </ul>
+        </nav>
+        <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none w-full lg:w-auto" href="login.html">Увійти</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="mx-auto w-full max-w-container px-4 pb-20 pt-10 sm:px-8 md:pt-14">
+    <h1 class="font-heading text-[2rem] font-bold leading-tight tracking-tight md:text-[2.75rem]">Турніри</h1>
+    <p class="mt-3 max-w-[65ch] text-lg text-muted">Знайди майбутній турнір, ознайомся з правилами та зареєструйся на гру місяця.</p>
+
+    <!-- Турнір місяця -->
+    <section class="group relative mt-10 overflow-hidden rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8 transition duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-neon-pink motion-reduce:transition-none motion-reduce:hover:translate-y-0" aria-labelledby="featured-title">
+      <p class="text-sm font-semibold uppercase tracking-wider text-secondary">Турнір місяця</p>
+      <h2 id="featured-title" class="mt-3 font-heading text-[2rem] font-bold leading-tight tracking-tight md:text-[2.75rem]"><a href="tournament.html?id=chess-cup" class="transition hover:text-primary">Чемпіонат гуртожитків: Шахи</a></h2>
+      <p class="mt-3 max-w-[70ch] text-muted">Відкритий турнір для студентів гуртожитків. Гра проходить у форматі офлайн-матчів, фінал — у головному залі.</p>
+      <div class="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div class="flex flex-wrap gap-x-12 gap-y-4">
+          <p class="flex flex-col"><span class="text-sm text-muted">Дата</span><time class="text-2xl font-semibold text-secondary" datetime="2026-11-12">12.11.2026</time></p>
+          <p class="flex flex-col"><span class="text-sm text-muted">Призовий фонд</span><span class="text-2xl font-bold">5 000 ₴</span></p>
+          <p class="flex flex-col"><span class="text-sm text-muted">Вільних місць</span><span class="text-2xl font-bold">6 / 16</span></p>
+        </div>
+        <a class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-6 py-4 text-lg sm:px-10 sm:text-xl font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none" href="tournament-register.html?id=chess-cup">Реєстрація</a>
+      </div>
+    </section>
+
+    <!-- Вкладки: WAI-ARIA Tabs, перемикання клацанням або стрілками -->
+    <div class="mt-14 flex gap-6 border-b border-line" role="tablist" aria-label="Турніри">
+      <button id="tab-upcoming" type="button" role="tab" aria-selected="true" aria-controls="panel-upcoming" class="-mb-px border-b-2 border-transparent pb-3 font-heading text-2xl font-bold text-muted transition hover:text-ink aria-selected:border-secondary aria-selected:text-secondary">Майбутні турніри</button>
+      <button id="tab-past" type="button" role="tab" aria-selected="false" aria-controls="panel-past" tabindex="-1" class="-mb-px border-b-2 border-transparent pb-3 font-heading text-2xl font-bold text-muted transition hover:text-ink aria-selected:border-secondary aria-selected:text-secondary">Минулі результати</button>
+    </div>
+    <div id="panel-upcoming" role="tabpanel" aria-labelledby="tab-upcoming" class="mt-8">
+      <ul class="flex flex-col gap-6">
+            <li>
+              <article class="group relative flex flex-col gap-4 rounded-2xl border border-line bg-surface p-6 md:flex-row md:items-center md:gap-6 transition duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-neon-pink motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+              <p class="flex flex-col gap-1 md:min-w-[150px]">
+                <span class="text-sm font-semibold text-muted">Дата</span>
+                <time class="text-2xl font-semibold text-secondary transition group-hover:[text-shadow:0_0_14px_rgb(var(--c-secondary)/0.8)]" datetime="2026-11-12">12.11.2026</time>
+              </p>
+              <div class="flex flex-col gap-1 md:flex-1">
+                <span class="text-sm font-semibold text-muted">Гра · Шахи</span>
+                <h3 class="font-heading text-[1.5rem] font-bold leading-tight tracking-tight transition group-hover:text-primary">
+                  <a href="tournament.html?id=chess-cup" class="after:absolute after:inset-0 after:rounded-2xl">Чемпіонат гуртожитків: Шахи</a>
+                </h3>
+                <span><span class="rounded-full bg-secondary/15 px-3 py-1 text-xs font-semibold text-secondary">Вільно 6 з 16</span></span>
+              </div>
+              <p class="flex flex-col gap-1 md:min-w-[150px]">
+                <span class="text-sm font-semibold text-muted">Призовий фонд</span>
+                <data class="text-2xl font-bold" value="5000">5 000 ₴</data>
+              </p>
+              <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none relative z-10" href="tournament-register.html?id=chess-cup">Реєстрація<span class="sr-only"> на турнір «Чемпіонат гуртожитків: Шахи»</span></a>
+            </article>
+            </li>
+            <li>
+              <article class="group relative flex flex-col gap-4 rounded-2xl border border-line bg-surface p-6 md:flex-row md:items-center md:gap-6 transition duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-neon-pink motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+              <p class="flex flex-col gap-1 md:min-w-[150px]">
+                <span class="text-sm font-semibold text-muted">Дата</span>
+                <time class="text-2xl font-semibold text-secondary transition group-hover:[text-shadow:0_0_14px_rgb(var(--c-secondary)/0.8)]" datetime="2026-11-15">15.11.2026</time>
+              </p>
+              <div class="flex flex-col gap-1 md:flex-1">
+                <span class="text-sm font-semibold text-muted">Гра · Каркассон</span>
+                <h3 class="font-heading text-[1.5rem] font-bold leading-tight tracking-tight transition group-hover:text-primary">
+                  <a href="tournament.html?id=carcassonne-cup" class="after:absolute after:inset-0 after:rounded-2xl">Кубок Каркассона</a>
+                </h3>
+                <span><span class="rounded-full bg-secondary/15 px-3 py-1 text-xs font-semibold text-secondary">Вільно 5 з 12</span></span>
+              </div>
+              <p class="flex flex-col gap-1 md:min-w-[150px]">
+                <span class="text-sm font-semibold text-muted">Призовий фонд</span>
+                <data class="text-2xl font-bold" value="3000">3 000 ₴</data>
+              </p>
+              <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none relative z-10" href="tournament-register.html?id=carcassonne-cup">Реєстрація<span class="sr-only"> на турнір «Кубок Каркассона»</span></a>
+            </article>
+            </li>
+            <li>
+              <article class="group relative flex flex-col gap-4 rounded-2xl border border-line bg-surface p-6 md:flex-row md:items-center md:gap-6 transition duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-neon-pink motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+              <p class="flex flex-col gap-1 md:min-w-[150px]">
+                <span class="text-sm font-semibold text-muted">Дата</span>
+                <time class="text-2xl font-semibold text-secondary transition group-hover:[text-shadow:0_0_14px_rgb(var(--c-secondary)/0.8)]" datetime="2026-11-19">19.11.2026</time>
+              </p>
+              <div class="flex flex-col gap-1 md:flex-1">
+                <span class="text-sm font-semibold text-muted">Гра · Коднеймс</span>
+                <h3 class="font-heading text-[1.5rem] font-bold leading-tight tracking-tight transition group-hover:text-primary">
+                  <a href="tournament.html?id=codenames-night" class="after:absolute after:inset-0 after:rounded-2xl">Ніч Коднеймс</a>
+                </h3>
+                <span><span class="rounded-full bg-primary-strong px-3 py-1 text-xs font-semibold text-white">Місць немає</span></span>
+              </div>
+              <p class="flex flex-col gap-1 md:min-w-[150px]">
+                <span class="text-sm font-semibold text-muted">Призовий фонд</span>
+                <data class="text-2xl font-bold" value="3000">3 000 ₴</data>
+              </p>
+              <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none relative z-10" href="tournament-full.html?id=codenames-night">Реєстрація<span class="sr-only"> на турнір «Ніч Коднеймс»</span></a>
+            </article>
+            </li>
+            <li>
+              <article class="group relative flex flex-col gap-4 rounded-2xl border border-line bg-surface p-6 md:flex-row md:items-center md:gap-6 transition duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-neon-pink motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+              <p class="flex flex-col gap-1 md:min-w-[150px]">
+                <span class="text-sm font-semibold text-muted">Дата</span>
+                <time class="text-2xl font-semibold text-secondary transition group-hover:[text-shadow:0_0_14px_rgb(var(--c-secondary)/0.8)]" datetime="2026-11-22">22.11.2026</time>
+              </p>
+              <div class="flex flex-col gap-1 md:flex-1">
+                <span class="text-sm font-semibold text-muted">Гра · Пандемія</span>
+                <h3 class="font-heading text-[1.5rem] font-bold leading-tight tracking-tight transition group-hover:text-primary">
+                  <a href="tournament.html?id=pandemic-coop" class="after:absolute after:inset-0 after:rounded-2xl">Кооперативний вечір: Пандемія</a>
+                </h3>
+                <span><span class="rounded-full bg-secondary/15 px-3 py-1 text-xs font-semibold text-secondary">Вільно 8 з 12</span></span>
+              </div>
+              <p class="flex flex-col gap-1 md:min-w-[150px]">
+                <span class="text-sm font-semibold text-muted">Призовий фонд</span>
+                <data class="text-2xl font-bold" value="1000">1 000 ₴</data>
+              </p>
+              <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none relative z-10" href="tournament-register.html?id=pandemic-coop">Реєстрація<span class="sr-only"> на турнір «Кооперативний вечір: Пандемія»</span></a>
+            </article>
+            </li>
+      </ul>
+    </div>
+    <div id="panel-past" role="tabpanel" aria-labelledby="tab-past" class="mt-8" hidden>
+      <ul class="flex flex-col gap-6">
+            <li class="group flex flex-col gap-2 rounded-2xl border border-line bg-surface p-6 sm:flex-row sm:items-center sm:justify-between transition duration-300 hover:-translate-y-1 hover:border-warning/60 hover:shadow-neon-gold motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+              <div><p class="text-sm font-semibold text-muted">25.10.2026 · 12 учасників, 9 турів</p><h3 class="font-heading text-[1.5rem] font-bold">Бліц-турнір з шахів</h3></div>
+              <p class="flex items-center gap-2 font-semibold"><i class="fa-solid fa-trophy text-warning transition group-hover:scale-125" aria-hidden="true"></i> Переможець: Дарина Кравченко</p>
+            </li>
+            <li class="group flex flex-col gap-2 rounded-2xl border border-line bg-surface p-6 sm:flex-row sm:items-center sm:justify-between transition duration-300 hover:-translate-y-1 hover:border-warning/60 hover:shadow-neon-gold motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+              <div><p class="text-sm font-semibold text-muted">18.10.2026 · 8 учасників</p><h3 class="font-heading text-[1.5rem] font-bold">Вечір Діксіта</h3></div>
+              <p class="flex items-center gap-2 font-semibold"><i class="fa-solid fa-trophy text-warning transition group-hover:scale-125" aria-hidden="true"></i> Переможець: Анна Коваль</p>
+            </li>
+            <li class="group flex flex-col gap-2 rounded-2xl border border-line bg-surface p-6 sm:flex-row sm:items-center sm:justify-between transition duration-300 hover:-translate-y-1 hover:border-warning/60 hover:shadow-neon-gold motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+              <div><p class="text-sm font-semibold text-muted">11.10.2026 · 16 учасників, фінал на чотирьох</p><h3 class="font-heading text-[1.5rem] font-bold">Кубок Катану</h3></div>
+              <p class="flex items-center gap-2 font-semibold"><i class="fa-solid fa-trophy text-warning transition group-hover:scale-125" aria-hidden="true"></i> Переможець: Максим Савченко</p>
+            </li>
+      </ul>
+    </div>
+
+    <section class="mt-14 rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8" aria-labelledby="rules-title">
+      <h2 id="rules-title" class="text-2xl font-semibold">Правила участі</h2>
+      <ol class="mt-4 flex list-decimal flex-col gap-2 pl-5 text-muted">
+        <li>Участь відкрита тільки для студентів, які проживають у гуртожитку. Перед реєстрацією потрібно підтвердити статус студента.</li>
+        <li>Реєстрація закривається за добу до початку турніру. Після закриття списки учасників не змінюються.</li>
+        <li>Гра проходить у форматі офлайн-матчів у зазначеному місці. Спізнення більше ніж на 15 хвилин вважається технічним програшем.</li>
+        <li>Призовий фонд розподіляється згідно з регламентом конкретного турніру. Деталі вказуються в картці кожного заходу.</li>
+      </ol>
+    </section>
+    <p class="mt-8 text-xs text-muted">* Ціни, профілі та турніри — приклади для демонстрації структури сайту.</p>
+  </main>
+
+  <!-- ================= ПІДВАЛ: завжди темний (data-theme="dark") ================= -->
+  <footer data-theme="dark" class="relative bg-night-soft pb-8 pt-16 text-sm text-muted">
+    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-secondary to-transparent opacity-70" aria-hidden="true"></div>
+    <div class="mx-auto w-full max-w-container px-4 sm:px-8">
+      <div class="grid gap-10 pb-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="flex flex-col gap-6 sm:col-span-2 lg:pr-24">
+          <a href="index.html" class="flex items-center gap-3 text-xl font-bold text-ink">
+            <img src="assets/images/logo.svg" alt="" width="176" height="173" class="h-12 w-auto" loading="lazy">
+            <span>Шах і Мат</span>
+          </a>
+          <p class="text-base">Платформа для студентів, щоб знайти суперника, орендувати нову гру або зіграти в турнір.</p>
+        </div>
+
+        <nav aria-labelledby="footer-nav-title">
+          <h2 id="footer-nav-title" class="mb-4 text-base font-semibold text-ink">Навігація</h2>
+          <ul class="flex flex-col gap-1">
+            <li><a class="inline-block py-2 transition hover:text-secondary" href="index.html">Головна</a></li>
+            <li><a class="inline-block py-2 transition hover:text-secondary" href="matching.html">Матчинг</a></li>
+            <li><a class="inline-block py-2 transition hover:text-secondary" href="catalog.html">Оренда</a></li>
+            <li><a class="inline-block py-2 transition hover:text-secondary" href="tournaments.html">Турніри</a></li>
+            <li><a class="inline-block py-2 transition hover:text-secondary" href="credits.html">Джерела фото</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h2 class="mb-4 text-base font-semibold text-ink">Контакти</h2>
+          <address class="flex flex-col gap-1 not-italic">
+            <a class="inline-flex items-center gap-2 py-2 transition hover:text-secondary" href="mailto:support@shakhimat.ua"><i class="fa-solid fa-envelope" aria-hidden="true"></i> support@shakhimat.ua</a>
+            <a class="inline-flex items-center gap-2 py-2 transition hover:text-secondary" href="tel:+380320000000"><i class="fa-solid fa-phone" aria-hidden="true"></i> +380 32 000 00 00</a>
+          </address>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <p>© 2026 Шах і Мат. Усі права захищені.</p>
+        <nav aria-label="Ми в соцмережах">
+          <ul class="flex flex-wrap gap-6">
+            <li><a class="inline-flex items-center gap-2 py-2 transition hover:text-secondary" href="https://www.instagram.com/" target="_blank" rel="noopener"><i class="fa-brands fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+            <li><a class="inline-flex items-center gap-2 py-2 transition hover:text-secondary" href="https://t.me/" target="_blank" rel="noopener"><i class="fa-brands fa-telegram" aria-hidden="true"></i> Telegram</a></li>
+            <li><a class="inline-flex items-center gap-2 py-2 transition hover:text-secondary" href="https://www.facebook.com/" target="_blank" rel="noopener"><i class="fa-brands fa-facebook" aria-hidden="true"></i> Facebook</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
