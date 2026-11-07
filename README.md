@@ -4,7 +4,7 @@
 
 **Демо:**
 - Netlify — https://shakh-i-mat.netlify.app/
-- GitHub Pages — https://ЛОГІН.github.io/shakh-i-mat/
+- GitHub Pages — https://SpellRey.github.io/shakh-i-mat/
 
 ## Можливості
 
@@ -64,7 +64,7 @@ shakh-i-mat/
 
 1. Склонувати репозиторій:
    ```bash
-   git clone https://github.com/ЛОГІН/shakh-i-mat.git
+   git clone https://github.com//SpellRey/shakh-i-mat.git
    ```
 2. Відкрити `index.html` у браузері або запустити через розширення **Live Server** у VS Code (так коректно працюють усі переходи між сторінками).
 
