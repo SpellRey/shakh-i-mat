@@ -1,0 +1,176 @@
+/* =============================================================
+   Шах і Мат — власні стилі (ЛР №8)
+   Тут лише те, що незручно описати утилітами Tailwind:
+   кольори двох тем, фонова текстура, CSS-змінні розмірів, фокус.
+   ============================================================= */
+
+/* ---------- Темна тема (за замовчуванням) ----------
+   Кольори записані як «R G B», щоб Tailwind міг додавати прозорість:
+   rgb(var(--c-night) / 0.8). Атрибут data-theme ставиться на <html>,
+   а на hero та підвалі — примусово "dark", щоб вони завжди були темними. */
+:root,
+[data-theme="dark"] {
+  --c-night: 11 11 26;
+  --c-night-deep: 12 23 41;
+  --c-night-soft: 22 22 46;
+  --c-ink: 244 244 255;
+  --c-muted: 164 164 191;
+  --c-secondary: 0 229 255;
+  --c-warning: 255 206 92;
+  --c-surface: rgb(255 255 255 / 0.06);
+  --c-line: rgb(255 255 255 / 0.14);
+  --shadow-card: 0 8px 24px rgb(0 0 0 / 0.4);
+  color-scheme: dark;
+}
+
+/* ---------- Світла тема «денна партія» ----------
+   Світло-лавандовий фон з ледь помітною шаховою сіткою, білі картки з м'якою
+   тінню; акценти ті самі (рожевий #D6124A), бірюзовий — темніший для контрасту. */
+[data-theme="light"] {
+  --c-night: 255 255 255;
+  --c-night-deep: 244 245 251;
+  --c-night-soft: 233 235 246;
+  --c-ink: 22 22 46;
+  --c-muted: 82 85 112;
+  --c-secondary: 0 118 138;
+  --c-warning: 184 120 0;
+  --c-surface: rgb(255 255 255 / 0.92);
+  --c-line: rgb(22 22 46 / 0.1);
+  --shadow-card: 0 1px 2px rgb(22 22 46 / 0.05), 0 16px 36px -16px rgb(22 22 46 / 0.25);
+  color-scheme: light;
+}
+
+/* ---------- Розміри ---------- */
+:root {
+  --header-height: 88px;
+  --hero-height: clamp(600px, calc(100svh - var(--header-height)), 860px); /* hero займає перший екран */
+  --map-height: 320px;              /* карта Google: використовується як h-[var(--map-height)] */
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
+}
+
+/* ---------- Фонова текстура (лише темна тема) ---------- */
+html[data-theme="dark"] body {
+  background-image: url("../assets/images/bg-texture.webp");
+  background-repeat: no-repeat;
+  /* на головній текстура починається під hero */
+  background-size: 100% calc(100% - var(--header-height) - var(--hero-height));
+  background-position: center calc(var(--header-height) + var(--hero-height));
+}
+
+/* внутрішні сторінки: текстура від самого верху, як у прототипі */
+html[data-theme="dark"] body.page-inner {
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+}
+
+/* світла тема: м'які кольорові плями (рожева, бірюзова, фіолетова) на світлому фоні */
+html[data-theme="light"] body {
+  background-image:
+    radial-gradient(ellipse 60% 45% at 0% 0%, rgb(255 46 99 / 0.08), transparent 70%),
+    radial-gradient(ellipse 55% 45% at 100% 35%, rgb(0 118 138 / 0.07), transparent 70%),
+    radial-gradient(ellipse 60% 45% at 15% 100%, rgb(124 92 255 / 0.06), transparent 70%);
+  background-attachment: fixed;
+}
+
+/* ---------- Неонові плями позаду карток можливостей ---------- */
+.features-glow {
+  background:
+    radial-gradient(circle at 10% 20%, rgb(255 46 99 / 0.18), transparent 30%),
+    radial-gradient(circle at 50% 90%, rgb(0 229 255 / 0.12), transparent 30%),
+    radial-gradient(circle at 95% 80%, rgb(255 46 99 / 0.12), transparent 30%);
+}
+
+/* у світлій темі неонові плями м'якші */
+html[data-theme="light"] .features-glow {
+  background:
+    radial-gradient(circle at 10% 20%, rgb(255 46 99 / 0.1), transparent 30%),
+    radial-gradient(circle at 90% 80%, rgb(0 118 138 / 0.08), transparent 30%);
+}
+
+/* ---------- Плавна зміна кольорів під час перемикання теми (клас ставить js/theme.js) ---------- */
+html.theme-switching,
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+/* ---------- Іконка перемикача теми (сонце / місяць) і логотип для кожної теми ---------- */
+html[data-theme="dark"] .theme-icon-moon,
+html[data-theme="light"] .theme-icon-sun,
+html[data-theme="dark"] .logo-light,
+html[data-theme="light"] .logo-dark {
+  display: none;
+}
+
+/* ---------- Єдиний помітний фокус для клавіатури ---------- */
+:focus-visible {
+  outline: 3px solid rgb(var(--c-secondary));
+  outline-offset: 3px;
+}
+
+/* ---------- Планшети й десктоп ---------- */
+@media (min-width: 768px) {
+  :root {
+    --map-height: 420px;
+  }
+}
+
+/* ---------- До 1024px шапка нижча (логотип 56px) ---------- */
+@media (max-width: 1023px) {
+  :root {
+    --header-height: 72px;
+  }
+}
+
+/* ---------- Мобільні екрани (< 768px): текстура на весь екран ---------- */
+@media (max-width: 767px) {
+  html[data-theme="dark"] body {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+}
+
+/* ---------- Hero: відео з конем, що обертається ----------
+   За замовчуванням (телефон, планшет) — приглушений фон на всю площу під текстом. */
+.hero-media {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 72% center;
+  opacity: 0.4;
+}
+
+/* Широкий горизонтальний екран: відео праворуч на всю висоту hero, лівий край плавно зникає.
+   Кінь у кадрі займає приблизно 56–86 % ширини відео, справа лише фон, тому на вужчих
+   екранах (до 1180px) відео трохи виїжджає за правий край — максимум на 24 % висоти hero —
+   і кінь не заходить під текст. */
+@media (min-width: 1024px) and (min-aspect-ratio: 5/4) {
+  .hero-media {
+    left: auto;
+    right: min(0px, max(calc(100vw - 1180px), calc(var(--hero-height) * -0.24)));
+    width: auto;
+    max-width: none;
+    opacity: 1;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 35%);
+    mask-image: linear-gradient(to right, transparent, #000 35%);
+  }
+}
+
+/* ---------- Менше руху, якщо так налаштовано в системі ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  html.theme-switching * {
+    transition: none !important;
+  }
+}
