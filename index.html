@@ -12,6 +12,9 @@
   <meta property="og:description" content="Знаходь компанію для гри в шахи та настілки за 60 секунд! P2P-оренда ігор та турніри у твоєму кампусі. Приєднуйся до лобі «Шах і Мат» просто зараз!">
   <meta name="theme-color" content="#0b0b1a">
   <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <!-- ЛР 10: стилі бібліотек у <head> — сторінка не «блимає» нестилізованими слайдером і галереєю (FOUC) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css" integrity="sha384-IFb872aCXZQb6BKRUHmGn0YHKnFl4ylZjkgVRRyMTEQ5bjo/H6xFUiLJm6opOO66" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.css" integrity="sha384-qlUhevqmCF5AxtnfkF0zXJClBzA6GJuX/UrLejCfE61bBGt+zo/My0AJ+ojVmUSb" crossorigin="anonymous">
 
   <!-- Тема (світла/темна) застосовується ще до рендерингу, щоб сторінка не «блимала» -->
   <script src="js/theme-init.js"></script>
@@ -90,7 +93,7 @@
           <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-secondary/40 bg-night/60 px-4 py-1 text-sm font-semibold uppercase tracking-wider text-secondary">
             <i class="fa-solid fa-chess-knight" aria-hidden="true"></i> Ігрове лобі твого кампусу
           </p>
-          <h1 id="hero-title" class="font-heading text-[2.25rem] font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">Твій наступний хід: знаходь компанію та настілки за хвилину</h1>
+          <h1 id="hero-title" class="font-heading text-[2.25rem] font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">Твій наступний хід:<span class="sr-only"> знаходь компанію та настілки за хвилину</span><span class="block min-h-[2.2em] text-secondary" aria-hidden="true"><span id="typed-text">знаходь компанію та настілки за хвилину</span></span></h1>
           <p class="mt-6 max-w-[40ch] text-lg leading-snug text-ink/90 sm:text-xl lg:text-2xl">Швидкий матчинг гравців у гуртожитку, орендуй топові ігри у сусідів без зайвих витрат і збирай власний турнір.</p>
           <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6">
             <!-- Головна дія: помітна, з неоновим світінням -->
@@ -269,6 +272,111 @@
       </div>
     </section>
 
+    <!-- ================= ГАЛЕРЕЯ (Fancybox 5): фото колекції, відкриваються на весь екран з зумом ================= -->
+    <section id="gallery" class="py-12 md:py-20" aria-labelledby="gallery-title">
+      <div class="mx-auto w-full max-w-container px-4 sm:px-8">
+        <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 id="gallery-title" class="font-heading text-[1.625rem] font-bold leading-tight tracking-tight md:text-[2rem]">Колекція в кадрі</h2>
+            <p class="mt-2 max-w-[60ch] text-muted">Натисни на фото, щоб роздивитися гру ближче: гортай стрілками або свайпом, наближай колесом миші чи двома пальцями.</p>
+          </div>
+          <a class="inline-flex items-center gap-2 text-sm font-semibold text-secondary transition hover:gap-3 hover:[text-shadow:0_0_12px_rgb(var(--c-secondary)/0.7)]" href="credits.html">Автори фото <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+        <ul class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
+          <li>
+            <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/1280px-Chess_game_Staunton_No._6.jpg" data-fancybox="games-gallery" data-caption="Шахи · Стратегія, 2 гравців. Фото: Wilfredor, CC0" aria-label="Відкрити фото: Шахи">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/500px-Chess_game_Staunton_No._6.jpg" alt="Дерев’яні шахові фігури Стаунтона на дошці в початковій позиції" width="500" height="307" loading="lazy" decoding="async">
+              <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
+                <span class="font-semibold">Шахи</span>
+                <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/1280px-Carcassonne_in_Kaisla.jpg" data-fancybox="games-gallery" data-caption="Каркассон · Стратегія, 2–5 гравців. Фото: JIP, CC BY-SA 4.0" aria-label="Відкрити фото: Каркассон">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/500px-Carcassonne_in_Kaisla.jpg" alt="Партія в «Каркассон»: розкладені тайли з містами й дорогами та фішки гравців" width="500" height="375" loading="lazy" decoding="async">
+              <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
+                <span class="font-semibold">Каркассон</span>
+                <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/1280px-Pandemic_board_game.jpg" data-fancybox="games-gallery" data-caption="Пандемія · Кооператив, 2–4 гравців. Фото: Padaguan, CC BY-SA 4.0" aria-label="Відкрити фото: Пандемія">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/500px-Pandemic_board_game.jpg" alt="Ігрове поле «Пандемії» з мапою світу та кубиками хвороб" width="500" height="375" loading="lazy" decoding="async">
+              <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
+                <span class="font-semibold">Пандемія</span>
+                <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
+               href="https://upload.wikimedia.org/wikipedia/commons/1/19/Taboo_02.jpg" data-fancybox="games-gallery" data-caption="Табу · Партійна, 4–10 гравців. Фото: FH (французька Вікіпедія), CC BY-SA 1.0" aria-label="Відкрити фото: Табу">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/1/19/Taboo_02.jpg" alt="Коробка, ігрове поле, пісковий годинник і картки гри «Табу»" width="405" height="336" loading="lazy" decoding="async">
+              <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
+                <span class="font-semibold">Табу</span>
+                <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/1280px-Monopoly_board_game.jpg" data-fancybox="games-gallery" data-caption="Монополія · Економіка, 2–6 гравців. Фото: Yahya, CC BY-SA 4.0" aria-label="Відкрити фото: Монополія">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/500px-Monopoly_board_game.jpg" alt="Поле «Монополії» з картками власності та паперовими грошима під час партії" width="500" height="375" loading="lazy" decoding="async">
+              <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
+                <span class="font-semibold">Монополія</span>
+                <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/1280px-Dixit_game_0001.jpg" data-fancybox="games-gallery" data-caption="Діксіт · Партійна, 3–8 гравців. Фото: yoppy, CC BY 2.0" aria-label="Відкрити фото: Діксіт">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/500px-Dixit_game_0001.jpg" alt="Гравці викладають ілюстровані картки «Діксіт» біля коробки-поля для підрахунку очок" width="500" height="333" loading="lazy" decoding="async">
+              <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
+                <span class="font-semibold">Діксіт</span>
+                <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/1280px-Settlers_of_Catan_completed.jpg" data-fancybox="games-gallery" data-caption="Катан · Економіка, 3–4 гравців. Фото: Fritzmann2002, CC BY-SA 4.0" aria-label="Відкрити фото: Катан">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/500px-Settlers_of_Catan_completed.jpg" alt="Завершена партія «Катану»: острів з гексів, дороги й поселення гравців" width="500" height="315" loading="lazy" decoding="async">
+              <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
+                <span class="font-semibold">Катан</span>
+                <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
+               href="https://upload.wikimedia.org/wikipedia/commons/8/84/Dobble_jeu.jpg" data-fancybox="games-gallery" data-caption="Доббл · Партійна, 2–8 гравців. Фото: zizou man, CC BY 2.0" aria-label="Відкрити фото: Доббл">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Dobble_jeu.jpg" alt="Круглі картки «Доббл» з кольоровими символами на столі" width="750" height="513" loading="lazy" decoding="async">
+              <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
+                <span class="font-semibold">Доббл</span>
+                <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/1280px-Codenames_board_game.jpg" data-fancybox="games-gallery" data-caption="Коднеймс · Партійна, 4–8 гравців. Фото: JIP, CC BY-SA 3.0" aria-label="Відкрити фото: Коднеймс">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/500px-Codenames_board_game.jpg" alt="Розкладені картки агентів у грі «Коднеймс»" width="500" height="375" loading="lazy" decoding="async">
+              <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
+                <span class="font-semibold">Коднеймс</span>
+                <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
     <!-- ================= МЕДІА: відео YouTube + віджет Lichess ================= -->
     <section id="media" class="py-12 md:py-20" aria-labelledby="media-title">
       <div class="mx-auto w-full max-w-container px-4 sm:px-8">
@@ -363,57 +471,111 @@
       </div>
     </section>
 
-    <!-- ================= ВІДГУКИ (Social Proof): золоте світіння при наведенні ================= -->
+    <!-- ================= ВІДГУКИ (Swiper.js 11): карусель, 1 / 2 / 3 слайди залежно від ширини ================= -->
     <section class="py-12 md:py-20" aria-labelledby="reviews-title">
       <div class="mx-auto w-full max-w-container px-4 sm:px-8">
-        <h2 id="reviews-title" class="mb-8 font-heading text-[1.625rem] font-bold leading-tight tracking-tight md:text-[2rem]">Відгуки студентів</h2>
-        <ul class="grid gap-6 md:grid-cols-3">
-          <li>
-            <figure class="group flex h-full flex-col gap-4 rounded-2xl border border-line bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-warning/60 hover:shadow-neon-gold motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-              <p class="text-lg text-warning transition duration-300 group-hover:tracking-widest group-hover:drop-shadow-[0_0_8px_rgb(255_206_92/0.9)] motion-reduce:transition-none"><span aria-hidden="true">★★★★★</span><span class="sr-only">Оцінка: 5 з 5</span></p>
-              <blockquote class="flex-1">
-                <p>«Знайшов суперника для шахів за 10 хвилин, а ще орендував Каркассон на вихідні. Усе в одному місці й без зайвих витрат.»</p>
-              </blockquote>
-              <figcaption class="flex items-center gap-3">
-                <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-strong text-sm font-bold text-white transition duration-300 group-hover:shadow-glow" aria-hidden="true">ОБ</span>
-                <span class="flex flex-col">
-                  <span class="font-semibold leading-tight">Олена Бондар</span>
-                  <span class="text-sm text-muted">Гуртожиток №4 · 2 курс</span>
-                </span>
-              </figcaption>
-            </figure>
-          </li>
-          <li>
-            <figure class="group flex h-full flex-col gap-4 rounded-2xl border border-line bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-warning/60 hover:shadow-neon-gold motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-              <p class="text-lg text-warning transition duration-300 group-hover:tracking-widest group-hover:drop-shadow-[0_0_8px_rgb(255_206_92/0.9)] motion-reduce:transition-none"><span aria-hidden="true">★★★★★</span><span class="sr-only">Оцінка: 5 з 5</span></p>
-              <blockquote class="flex-1">
-                <p>«Орендував «Пандемію» у сусіда на вихідні — вигідніше, ніж купувати. Власник підтвердив запит за кілька хвилин.»</p>
-              </blockquote>
-              <figcaption class="flex items-center gap-3">
-                <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-strong text-sm font-bold text-white transition duration-300 group-hover:shadow-glow" aria-hidden="true">МК</span>
-                <span class="flex flex-col">
-                  <span class="font-semibold leading-tight">Максим Коваль</span>
-                  <span class="text-sm text-muted">Гуртожиток №5 · 3 курс</span>
-                </span>
-              </figcaption>
-            </figure>
-          </li>
-          <li>
-            <figure class="group flex h-full flex-col gap-4 rounded-2xl border border-line bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-warning/60 hover:shadow-neon-gold motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-              <p class="text-lg text-warning transition duration-300 group-hover:tracking-widest group-hover:drop-shadow-[0_0_8px_rgb(255_206_92/0.9)] motion-reduce:transition-none"><span aria-hidden="true">★★★★★</span><span class="sr-only">Оцінка: 5 з 5</span></p>
-              <blockquote class="flex-1">
-                <p>«Записалась на турнір із Каркассона й познайомилась із новими людьми. Реєстрація зайняла менше хвилини.»</p>
-              </blockquote>
-              <figcaption class="flex items-center gap-3">
-                <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-strong text-sm font-bold text-white transition duration-300 group-hover:shadow-glow" aria-hidden="true">СМ</span>
-                <span class="flex flex-col">
-                  <span class="font-semibold leading-tight">Софія Мельник</span>
-                  <span class="text-sm text-muted">Гуртожиток №2 · 1 курс</span>
-                </span>
-              </figcaption>
-            </figure>
-          </li>
-        </ul>
+        <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+          <h2 id="reviews-title" class="font-heading text-[1.625rem] font-bold leading-tight tracking-tight md:text-[2rem]">Відгуки студентів</h2>
+          <div class="flex gap-3">
+            <button type="button" class="reviews-prev grid h-11 w-11 place-items-center rounded-full border border-line bg-surface text-lg transition hover:border-secondary hover:text-secondary hover:shadow-neon-cyan-sm disabled:opacity-40" aria-label="Попередній відгук"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
+            <button type="button" class="reviews-next grid h-11 w-11 place-items-center rounded-full border border-line bg-surface text-lg transition hover:border-secondary hover:text-secondary hover:shadow-neon-cyan-sm disabled:opacity-40" aria-label="Наступний відгук"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+        <div class="swiper reviews-swiper" aria-roledescription="карусель" aria-label="Відгуки студентів">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide !h-auto">
+              <figure class="group flex h-full flex-col gap-4 rounded-2xl border border-line bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-warning/60 hover:shadow-neon-gold motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+                <p class="text-lg text-warning"><span aria-hidden="true">★★★★★</span><span class="sr-only">Оцінка: 5 з 5</span></p>
+                <blockquote class="flex-1">
+                  <p>«Знайшла суперницю для шахів за 10 хвилин, а ще орендувала «Каркассон» на вихідні. Усе в одному місці й без зайвих витрат.»</p>
+                </blockquote>
+                <figcaption class="flex items-center gap-3">
+                  <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-strong text-sm font-bold text-white" aria-hidden="true">ОБ</span>
+                  <span class="flex flex-col">
+                    <span class="font-semibold leading-tight">Олена Бондар</span>
+                    <span class="text-sm text-muted">Гуртожиток №4 · 2 курс</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
+            <div class="swiper-slide !h-auto">
+              <figure class="group flex h-full flex-col gap-4 rounded-2xl border border-line bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-warning/60 hover:shadow-neon-gold motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+                <p class="text-lg text-warning"><span aria-hidden="true">★★★★★</span><span class="sr-only">Оцінка: 5 з 5</span></p>
+                <blockquote class="flex-1">
+                  <p>«Орендував «Пандемію» у сусіда на вихідні — вигідніше, ніж купувати. Власник підтвердив запит за кілька хвилин.»</p>
+                </blockquote>
+                <figcaption class="flex items-center gap-3">
+                  <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-strong text-sm font-bold text-white" aria-hidden="true">МК</span>
+                  <span class="flex flex-col">
+                    <span class="font-semibold leading-tight">Максим Коваль</span>
+                    <span class="text-sm text-muted">Гуртожиток №5 · 3 курс</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
+            <div class="swiper-slide !h-auto">
+              <figure class="group flex h-full flex-col gap-4 rounded-2xl border border-line bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-warning/60 hover:shadow-neon-gold motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+                <p class="text-lg text-warning"><span aria-hidden="true">★★★★★</span><span class="sr-only">Оцінка: 5 з 5</span></p>
+                <blockquote class="flex-1">
+                  <p>«Записалась на турнір із «Каркассону» й познайомилась із новими людьми. Реєстрація зайняла менше хвилини.»</p>
+                </blockquote>
+                <figcaption class="flex items-center gap-3">
+                  <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-strong text-sm font-bold text-white" aria-hidden="true">СМ</span>
+                  <span class="flex flex-col">
+                    <span class="font-semibold leading-tight">Софія Мельник</span>
+                    <span class="text-sm text-muted">Гуртожиток №2 · 1 курс</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
+            <div class="swiper-slide !h-auto">
+              <figure class="group flex h-full flex-col gap-4 rounded-2xl border border-line bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-warning/60 hover:shadow-neon-gold motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+                <p class="text-lg text-warning"><span aria-hidden="true">★★★★★</span><span class="sr-only">Оцінка: 5 з 5</span></p>
+                <blockquote class="flex-1">
+                  <p>«Виграла бліц-турнір з шахів! Зручно, що сітка й час партій одразу видно на сторінці турніру.»</p>
+                </blockquote>
+                <figcaption class="flex items-center gap-3">
+                  <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-strong text-sm font-bold text-white" aria-hidden="true">ДК</span>
+                  <span class="flex flex-col">
+                    <span class="font-semibold leading-tight">Дарина Кравченко</span>
+                    <span class="text-sm text-muted">Гуртожиток №4 · 4 курс</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
+            <div class="swiper-slide !h-auto">
+              <figure class="group flex h-full flex-col gap-4 rounded-2xl border border-line bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-warning/60 hover:shadow-neon-gold motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+                <p class="text-lg text-warning"><span aria-hidden="true">★★★★★</span><span class="sr-only">Оцінка: 5 з 5</span></p>
+                <blockquote class="flex-1">
+                  <p>«Ми з сусідами щоп’ятниці граємо в «Коднеймс». Через матчинг до нас приєдналися ще двоє людей з іншого поверху.»</p>
+                </blockquote>
+                <figcaption class="flex items-center gap-3">
+                  <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-strong text-sm font-bold text-white" aria-hidden="true">ІМ</span>
+                  <span class="flex flex-col">
+                    <span class="font-semibold leading-tight">Ілля Мельник</span>
+                    <span class="text-sm text-muted">Гуртожиток №2 · 2 курс</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
+            <div class="swiper-slide !h-auto">
+              <figure class="group flex h-full flex-col gap-4 rounded-2xl border border-line bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-warning/60 hover:shadow-neon-gold motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+                <p class="text-lg text-warning"><span aria-hidden="true">★★★★★</span><span class="sr-only">Оцінка: 5 з 5</span></p>
+                <blockquote class="flex-1">
+                  <p>«Перший тиждень у гуртожитку нікого не знав. Пішов на вечір «Діксіта» з сайту — тепер маємо свою компанію.»</p>
+                </blockquote>
+                <figcaption class="flex items-center gap-3">
+                  <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-strong text-sm font-bold text-white" aria-hidden="true">СТ</span>
+                  <span class="flex flex-col">
+                    <span class="font-semibold leading-tight">Сергій Ткаченко</span>
+                    <span class="text-sm text-muted">Гуртожиток №5 · 1 курс</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+          <div class="swiper-pagination reviews-pagination"></div>
+        </div>
       </div>
     </section>
 
@@ -565,5 +727,12 @@
       </div>
     </div>
   </footer>
+
+  <!-- ================= ЛР 10: JS-бібліотеки (Vanilla JS, без jQuery) перед </body> =================
+       Порядок важливий: спершу бібліотеки, потім js/main.js з ініціалізацією (new Swiper, Fancybox.bind, new Typed) -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js" integrity="sha384-JiF4eFN9V3I2Fry7TzFM3XKdq0P3abiVxpOeHjGz4cwvas+uNg6pFWVmuD6MKXqG" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.umd.js" integrity="sha384-BodKYo5iRmFaqEaP1o8AAu9hCHqLvNhSWEg12QF1IjPnl1SgsrwQMSMKUB4POJ18" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js" integrity="sha384-cMrTlShXEGSdSFA359p+3aVUxK/R+0TAfbRZMcTlAn8yqzxEDj05QsS65nTFMMj4" crossorigin="anonymous"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

@@ -168,6 +168,31 @@ html[data-theme="light"] .logo-dark {
   }
 }
 
+/* ---------- ЛР 10: кольори Swiper і Fancybox під тему сайту ----------
+   Swiper читає власні CSS-змінні, тому достатньо перевизначити їх через змінні теми. */
+.reviews-swiper {
+  --swiper-theme-color: rgb(var(--c-secondary));
+  --swiper-pagination-bullet-inactive-color: rgb(var(--c-muted));
+  --swiper-pagination-bullet-inactive-opacity: 0.45;
+  --swiper-pagination-bullet-size: 10px;
+  --swiper-pagination-bullet-horizontal-gap: 6px;
+  padding-bottom: 3rem; /* місце для крапок пагінації під картками */
+}
+.reviews-swiper .swiper-pagination-bullet-active {
+  box-shadow: 0 0 10px rgb(var(--c-secondary) / 0.8);
+}
+
+/* Курсор Typed.js — бірюзовий, як і рядок, що друкується */
+.typed-cursor {
+  color: rgb(var(--c-secondary));
+  font-weight: 400;
+}
+
+/* Fancybox: акцентний колір (кнопки, рамка активної мініатюри) — фірмовий бірюзовий */
+.fancybox__container {
+  --fancybox-accent-color: rgb(0 229 255);
+}
+
 /* ---------- Менше руху, якщо так налаштовано в системі ---------- */
 @media (prefers-reduced-motion: reduce) {
   html {
