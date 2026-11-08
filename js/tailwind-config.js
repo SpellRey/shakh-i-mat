@@ -18,6 +18,9 @@ tailwind.config = {
         ink: 'rgb(var(--c-ink) / <alpha-value>)',
         muted: 'rgb(var(--c-muted) / <alpha-value>)',
         warning: 'rgb(var(--c-warning) / <alpha-value>)',
+        // стани полів форми (ЛР 9): помилка — червоний, успіх — зелений, відтінок залежить від теми
+        danger: 'rgb(var(--c-danger) / <alpha-value>)',
+        success: 'rgb(var(--c-success) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
