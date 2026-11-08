@@ -51,6 +51,7 @@
   function showError(field, message) {
     field.classList.remove('border-line', 'border-success');
     field.classList.add('border-danger');
+    if (field.type === 'checkbox') field.classList.add('ring-2', 'ring-danger', 'ring-offset-2', 'ring-offset-night');
     field.setAttribute('aria-invalid', 'true');
     const error = document.getElementById(field.id + '-error');
     error.textContent = message;
@@ -61,7 +62,7 @@
 
   // Success: зелена рамка й позначка ✓, помилку приховано, aria-invalid="false".
   function showSuccess(field) {
-    field.classList.remove('border-line', 'border-danger');
+    field.classList.remove('border-line', 'border-danger', 'ring-2', 'ring-danger', 'ring-offset-2', 'ring-offset-night');
     field.classList.add('border-success');
     field.setAttribute('aria-invalid', 'false');
     const error = document.getElementById(field.id + '-error');
@@ -73,7 +74,7 @@
 
   // Normal: повертає поле до початкового вигляду (після reset форми).
   function clearError(field) {
-    field.classList.remove('border-danger', 'border-success');
+    field.classList.remove('border-danger', 'border-success', 'ring-2', 'ring-danger', 'ring-offset-2', 'ring-offset-night');
     field.classList.add('border-line');
     field.setAttribute('aria-invalid', 'false');
     const error = document.getElementById(field.id + '-error');
@@ -176,7 +177,10 @@
   function updateCounter() {
     const length = fields.message.value.length;
     counter.textContent = `${length} / ${MESSAGE_MAX}`;
-    counter.classList.toggle('text-danger', length > 0 && fields.message.value.trim().length < MESSAGE_MIN);
+    const tooShort = length > 0 && fields.message.value.trim().length < MESSAGE_MIN;
+    // text-muted і text-danger задають color — лишаємо лише один, інакше переможе той, що пізніше в CSS
+    counter.classList.toggle('text-danger', tooShort);
+    counter.classList.toggle('text-muted', !tooShort);
   }
 
   // ---------- Динамічна валідація: input / blur / change ----------

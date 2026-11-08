@@ -188,10 +188,11 @@
     </div>
 
     <!-- ================= МОДАЛЬНЕ ВІКНО УСПІХУ =================
-         Overlay (fixed inset-0 + затемнення) перекриває всю сторінку; картка — role="dialog" з aria-modal.
+         Overlay (fixed inset-0 + затемнення) перекриває всю сторінку; картка — role="dialog" з aria-modal
+         і суцільним фоном bg-night-soft (напівпрозорий фон панелі пропускав форму під вікном).
          Закривається кнопкою, клавішею Esc або кліком по затемненню (клік усередині картки його не закриває). -->
     <div id="success-modal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/70 p-4 backdrop-blur-sm" data-modal-overlay>
-      <div class="rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8 w-full max-w-md text-center" role="dialog" aria-modal="true" aria-labelledby="success-title" aria-describedby="success-text" tabindex="-1" data-modal-card>
+      <div class="rounded-3xl border border-line bg-night-soft p-6 shadow-card backdrop-blur-md sm:p-8 w-full max-w-md text-center" role="dialog" aria-modal="true" aria-labelledby="success-title" aria-describedby="success-text" tabindex="-1" data-modal-card>
         <span class="mx-auto grid h-16 w-16 place-items-center rounded-full border border-success/50 bg-success/10 text-3xl text-success" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
         <h2 id="success-title" class="mt-5 font-heading text-2xl font-bold">Дякуємо, <span data-success-name>друже</span>!</h2>
         <p id="success-text" class="mt-3 text-muted">Імітація успішного надсилання: форма пройшла перевірку в браузері. Сайт статичний, тому повідомлення нікуди не відправлено — на справжньому сервісі відповідь прийшла б на <span class="font-semibold text-ink" data-success-email>вашу пошту</span>.</p>
