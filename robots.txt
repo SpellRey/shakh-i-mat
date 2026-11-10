@@ -1,0 +1,5 @@
+# Дозволяємо індексувати весь сайт; службові сторінки позначені meta robots noindex
+User-agent: *
+Allow: /
+
+Sitemap: https://shakh-i-mat.vercel.app/sitemap.xml
