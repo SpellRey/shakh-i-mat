@@ -1,0 +1,82 @@
+# CI/CD для сайту «Шах і Мат» (ЛР 12).
+# Кожен push у main: 1) CI — перевірка коду й збирання Tailwind CSS; 2) CD — деплой на Vercel у production.
+# Секрети (GitHub → Settings → Secrets and variables → Actions):
+#   VERCEL_TOKEN      — токен з Vercel → Account Settings → Tokens
+#   VERCEL_ORG_ID     — ID команди/акаунта Vercel (Team Settings → General → Team ID)
+#   VERCEL_PROJECT_ID — ID проєкту (Project → Settings → General → Project ID)
+# Автоматичний Git-деплой Vercel для main вимкнено у vercel.json, щоб продакшн оновлював лише цей конвеєр.
+name: CI/CD Production Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # ручний запуск з вкладки Actions
+
+# два запуски одночасно не деплоять: новіший чекає завершення попереднього
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+jobs:
+  # ---------------- CI: перевірки ----------------
+  check:
+    name: Перевірка коду
+    runs-on: ubuntu-latest
+    steps:
+      - name: Отримати код репозиторію
+        uses: actions/checkout@v4
+
+      - name: Встановити Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Синтаксис JavaScript
+        run: for f in js/*.js; do node --check "$f"; done
+
+      - name: Tailwind CDN не використовується в HTML
+        run: |
+          if grep -l "cdn.tailwindcss.com" *.html; then
+            echo "::error::Знайдено Tailwind CDN — стилі мають підключатися з css/tailwind.css"; exit 1
+          fi
+
+      - name: Зібрати Tailwind CSS
+        run: |
+          npm install --no-audit --no-fund
+          npm run build:css
+          test -s css/tailwind.css
+
+  # ---------------- CD: деплой на Vercel ----------------
+  deploy:
+    name: Деплой на Vercel (production)
+    needs: check # деплой лише після успішних перевірок
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - name: Отримати код репозиторію
+        uses: actions/checkout@v4
+
+      - name: Встановити Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Зібрати Tailwind CSS
+        run: |
+          npm install --no-audit --no-fund
+          npm run build:css
+          rm -rf node_modules # залежності потрібні лише для збирання, на сайт вони не потрапляють
+
+      - name: Встановити Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Отримати налаштування production-середовища
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Підготувати збірку
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Опублікувати на Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}

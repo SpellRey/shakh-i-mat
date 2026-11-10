@@ -1,0 +1,7 @@
+# Файли, які не публікуються на Vercel (потрібні лише для розробки та збирання)
+node_modules
+src
+.github
+package.json
+package-lock.json
+tailwind.config.js
