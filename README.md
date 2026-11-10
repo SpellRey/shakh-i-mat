@@ -38,7 +38,7 @@
 ## Технології
 
 - **HTML5** — семантична розмітка (`header`, `nav`, `main`, `section`, `article`, `footer`).
-- **Tailwind CSS 3** (CDN) — утилітарні класи; спільна тема (кольори, шрифти, тіні) у `js/tailwind-config.js`.
+- **Tailwind CSS 3** — утилітарні класи; тема (кольори, шрифти, тіні) у `tailwind.config.js`, стилі зібрано в статичний `css/tailwind.css` (без CDN-скрипта).
 - **CSS** — змінні кольорів для світлої й темної теми, фон і окремі стилі у `css/custom-styles.css`.
 - **JavaScript** (без бібліотек) — тема, меню, фільтри каталогу, калькулятор оренди, вкладки, валідація форм.
 - **Swiper.js 11, Fancybox 5, Typed.js 2** — JS-бібліотеки без jQuery, підключені через CDN jsDelivr з фіксованими версіями та SRI-хешами; ініціалізація в `js/main.js`.
@@ -52,9 +52,9 @@ shakh-i-mat/
 ├── index.html            головна сторінка
 ├── *.html                інші сторінки (див. таблицю вище)
 ├── css/
-│   └── custom-styles.css теми, фон, анімації
+│   ├── custom-styles.css теми, фон, анімації
+│   └── tailwind.css      зібраний Tailwind (не редагувати вручну)
 ├── js/
-│   ├── tailwind-config.js тема Tailwind (кольори через CSS-змінні)
 │   ├── theme-init.js     застосовує тему ще до показу сторінки
 │   ├── theme.js          перемикач світлої/темної теми
 │   ├── menu.js           мобільне меню
@@ -63,10 +63,16 @@ shakh-i-mat/
 │   ├── main.js           ініціалізація Swiper, Fancybox і Typed.js на головній
 │   ├── widget.js         калькулятор оренди з валідацією та захистом від Edge Cases
 │   └── validation.js     валідація форми зворотного зв’язку
-└── assets/
-    ├── icons/            SVG-іконки переваг
-    ├── images/           логотип, фон, заставка відео
-    └── video/            відео з конем (WebM і MP4)
+├── assets/
+│   ├── icons/            SVG-іконки переваг
+│   ├── images/           логотип, фон, заставка відео, OG-зображення
+│   └── video/            відео з конем (WebM і MP4)
+├── src/tailwind.css      вхідний файл для збирання Tailwind
+├── tailwind.config.js    тема Tailwind (кольори через CSS-змінні)
+├── package.json          команда npm run build:css
+├── robots.txt, sitemap.xml
+├── vercel.json           налаштування Vercel
+└── .github/workflows/deploy.yml   CI/CD: перевірка, збирання CSS, деплой на Vercel
 ```
 
 ## Як запустити
@@ -75,11 +81,20 @@ shakh-i-mat/
 
 1. Склонувати репозиторій:
    ```bash
-   git clone https://github.com//SpellRey/shakh-i-mat.git
+   git clone https://github.com/SpellRey/shakh-i-mat.git
    ```
 2. Відкрити `index.html` у браузері або запустити через розширення **Live Server** у VS Code (так коректно працюють усі переходи між сторінками).
 
-Для публікації на GitHub Pages / Netlify / Vercel (Framework Preset «Other») достатньо вказати гілку `main` і корінь репозиторію (`/`), команда збірки не потрібна.
+Готовий `css/tailwind.css` уже лежить у репозиторії. Якщо додаєте нові класи Tailwind, перезберіть стилі (потрібен Node.js):
+```bash
+npm install
+npm run build:css
+```
+
+## Деплой (CI/CD)
+
+- **Vercel (production)** — GitHub Actions (`.github/workflows/deploy.yml`): після кожного push у `main` перевіряє JavaScript, збирає Tailwind CSS і публікує сайт через Vercel CLI. Потрібні секрети репозиторію `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`. Автоматичний Git-деплой Vercel для `main` вимкнено у `vercel.json`.
+- **Netlify** і **GitHub Pages** — публікують корінь гілки `main` без збирання.
 
 ## Джерела
 
