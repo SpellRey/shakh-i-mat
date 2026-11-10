@@ -272,6 +272,88 @@
       </div>
     </section>
 
+    <!-- ================= ВІДЖЕТ (ЛР 11): калькулятор вартості оренди =================
+         data-rent-calc — корінь віджета: widget.js шукає поля лише всередині нього (ізоляція від решти сторінки).
+         Без JavaScript видно форму й підказку з цінами; підсумок з'являється після ініціалізації. -->
+    <section id="calculator" class="py-12 md:py-20" aria-labelledby="calc-title">
+      <div class="mx-auto w-full max-w-container px-4 sm:px-8">
+        <div class="mb-8 max-w-[65ch]">
+          <h2 id="calc-title" class="font-heading text-[1.625rem] font-bold leading-tight tracking-tight md:text-[2rem]">Скільки коштуватиме оренда?</h2>
+          <p class="mt-2 text-muted">Обери гру й кількість днів — сума перерахується одразу. Від 3 днів діє знижка 10 %, від 7 днів — 20 %.</p>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px]" data-rent-calc>
+          <!-- ---------- Параметри ---------- -->
+          <form class="rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8 grid gap-6 sm:grid-cols-2" novalidate aria-describedby="rent-note" data-calc-form>
+            <div class="flex flex-col gap-2 sm:col-span-2">
+              <label for="rent-game" class="text-sm font-semibold text-muted">Гра</label>
+              <select id="rent-game" name="game" aria-describedby="error-game" aria-invalid="false" class="min-h-[48px] w-full rounded-xl border border-line bg-night/60 px-4 text-ink placeholder:text-muted/70 transition focus:border-secondary hover:border-secondary/50" data-calc="game">
+                <option value="chess" data-price="50">Шахи — 50 грн/день</option>
+                <option value="carcassonne" data-price="100" selected>Каркассон — 100 грн/день</option>
+                <option value="pandemic" data-price="80">Пандемія — 80 грн/день</option>
+                <option value="taboo" data-price="100">Табу — 100 грн/день</option>
+                <option value="monopoly" data-price="90">Монополія — 90 грн/день</option>
+                <option value="dixit" data-price="70">Діксіт — 70 грн/день</option>
+                <option value="catan" data-price="60">Катан — 60 грн/день</option>
+                <option value="dobble" data-price="80">Доббл — 80 грн/день</option>
+                <option value="codenames" data-price="75">Коднеймс — 75 грн/день</option>
+              </select>
+              <p id="error-game" class="hidden text-sm font-medium text-danger" aria-live="polite" data-calc="game-error"></p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="rent-days" class="text-sm font-semibold text-muted">Кількість днів</label>
+              <input id="rent-days" name="days" type="number" inputmode="numeric" min="1" max="14" step="1" value="3" required
+                     aria-describedby="rent-days-hint error-days" aria-invalid="false" class="min-h-[48px] w-full rounded-xl border border-line bg-night/60 px-4 text-ink placeholder:text-muted/70 transition focus:border-secondary hover:border-secondary/50" data-calc="days">
+              <p id="rent-days-hint" class="text-xs text-muted" data-calc="days-hint">Від 1 до 14 днів, лише повні дні.</p>
+              <p id="error-days" class="hidden text-sm font-medium text-danger" aria-live="polite" data-calc="days-error"></p>
+            </div>
+
+            <fieldset class="flex flex-col gap-2">
+              <legend class="text-sm font-semibold text-muted mb-2">Отримання</legend>
+              <div class="flex flex-col gap-2">
+                <div>
+                  <input id="rent-pickup" type="radio" name="delivery" value="pickup" class="peer sr-only" checked data-calc="delivery">
+                  <label for="rent-pickup" class="flex cursor-pointer items-center gap-3 rounded-xl border border-line bg-night-deep/60 px-4 py-3 transition hover:border-secondary/60 peer-checked:border-secondary peer-checked:bg-secondary/10 peer-checked:shadow-neon-cyan-sm peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-secondary"><i class="fa-solid fa-person-walking w-5 text-secondary" aria-hidden="true"></i><span class="flex-1">Самовивіз</span><span class="text-sm text-muted">0 грн</span></label>
+                </div>
+                <div>
+                  <input id="rent-delivery" type="radio" name="delivery" value="delivery" data-price="30" class="peer sr-only" data-calc="delivery">
+                  <label for="rent-delivery" class="flex cursor-pointer items-center gap-3 rounded-xl border border-line bg-night-deep/60 px-4 py-3 transition hover:border-secondary/60 peer-checked:border-secondary peer-checked:bg-secondary/10 peer-checked:shadow-neon-cyan-sm peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-secondary"><i class="fa-solid fa-truck-fast w-5 text-secondary" aria-hidden="true"></i><span class="flex-1">До кімнати</span><span class="text-sm text-muted">+30 грн</span></label>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="flex items-start gap-3 sm:col-span-2">
+              <input id="rent-insurance" name="insurance" type="checkbox" class="mt-0.5 h-6 w-6 shrink-0 cursor-pointer rounded border-line accent-[#d6124a]" aria-describedby="rent-insurance-hint" data-calc="insurance">
+              <div>
+                <label for="rent-insurance" class="cursor-pointer font-semibold">Страхування комплекту (+10 %)</label>
+                <p id="rent-insurance-hint" class="text-sm text-muted">Покриває загублені фішки чи картки — власник не вимагатиме компенсацію.</p>
+              </div>
+            </div>
+            <p id="rent-note" class="text-xs text-muted sm:col-span-2">Розрахунок орієнтовний: остаточну суму підтверджує власник гри.</p>
+          </form>
+
+          <!-- ---------- Результат ---------- -->
+          <aside class="rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8 flex flex-col gap-5 lg:sticky lg:top-28 lg:self-start" aria-labelledby="calc-result-title">
+            <h3 id="calc-result-title" class="text-lg font-semibold">Твій розрахунок</h3>
+            <dl class="flex flex-col gap-2 text-sm" data-calc="breakdown">
+              <div class="flex justify-between gap-4"><dt class="text-muted" data-calc="rent-label">Оренда</dt><dd class="text-right tabular-nums" data-calc="rent-value">—</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-muted" data-calc="discount-label">Знижка</dt><dd class="text-right tabular-nums text-success" data-calc="discount-value">—</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-muted">Страхування</dt><dd class="text-right tabular-nums" data-calc="insurance-value">—</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-muted">Доставка</dt><dd class="text-right tabular-nums" data-calc="delivery-value">—</dd></div>
+            </dl>
+            <div class="border-t border-line pt-4">
+              <p class="text-sm text-muted">Разом</p>
+              <!-- aria-live: скрінрідер повідомить нову суму після зміни параметрів -->
+              <p id="total-price" class="break-words font-heading text-4xl font-bold tabular-nums text-ink" aria-live="polite" aria-atomic="true" data-calc="total">—</p>
+              <p class="mt-1 hidden text-sm text-danger" data-calc="total-error">Виправте параметри, щоб побачити суму.</p>
+            </div>
+            <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none justify-center aria-disabled:pointer-events-none aria-disabled:opacity-50" href="catalog.html" data-calc="cta">Обрати власника гри <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
     <!-- ================= ГАЛЕРЕЯ (Fancybox 5): фото колекції, відкриваються на весь екран з зумом ================= -->
     <section id="gallery" class="py-12 md:py-20" aria-labelledby="gallery-title">
       <div class="mx-auto w-full max-w-container px-4 sm:px-8">
@@ -734,5 +816,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.umd.js" integrity="sha384-BodKYo5iRmFaqEaP1o8AAu9hCHqLvNhSWEg12QF1IjPnl1SgsrwQMSMKUB4POJ18" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js" integrity="sha384-cMrTlShXEGSdSFA359p+3aVUxK/R+0TAfbRZMcTlAn8yqzxEDj05QsS65nTFMMj4" crossorigin="anonymous"></script>
   <script src="js/main.js"></script>
+  <script src="js/widget.js"></script>
 </body>
 </html>
