@@ -127,6 +127,9 @@
     }
 
     function showInvalid() {
+      // підписи повертаються до нейтральних, щоб не показувати «Знижка 10 %» біля порожньої суми
+      setText(el.rentLabel, 'Оренда');
+      setText(el.discountLabel, 'Знижка');
       setText(el.total, '—');
       ['rentValue', 'discountValue', 'insuranceValue', 'deliveryValue'].forEach((key) => setText(el[key], '—'));
       if (el.totalError) el.totalError.classList.remove('hidden');
@@ -159,7 +162,7 @@
 
       setText(el.rentLabel, `Оренда: ${formatUAH(price.price)} × ${days.days} дн.`);
       setText(el.rentValue, formatUAH(result.rent));
-      setText(el.discountLabel, result.discountRate ? `Знижка ${Math.round(result.discountRate * 100)} %` : 'Знижка');
+      setText(el.discountLabel, result.discountRate ? `Знижка ${Math.round(result.discountRate * 100)}\u00a0%` : 'Знижка'); // нерозривний пробіл: «10 %» не розривається
       setText(el.discountValue, result.discount ? `−${formatUAH(result.discount)}` : '—');
       setText(el.insuranceValue, result.insuranceCost ? `+${formatUAH(result.insuranceCost)}` : '—');
       setText(el.deliveryValue, result.deliveryCost ? `+${formatUAH(result.deliveryCost)}` : '—');
