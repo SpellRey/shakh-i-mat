@@ -10,26 +10,40 @@
   <meta property="og:site_name" content="Шах і Мат">
   <meta property="og:title" content="Вхід | Шах і Мат">
   <meta property="og:description" content="Вхід у систему на платформі «Шах і Мат» для студентів гуртожитків.">
+  <link rel="canonical" href="https://shakh-i-mat.vercel.app/login.html">
+  <meta property="og:url" content="https://shakh-i-mat.vercel.app/login.html">
+  <meta property="og:image" content="https://shakh-i-mat.vercel.app/assets/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Головна сторінка сайту «Шах і Мат» з неоновим шаховим конем">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#0b0b1a">
   <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
 
   <!-- Тема (світла/темна) застосовується ще до рендерингу, щоб сторінка не «блимала» -->
   <script src="js/theme-init.js"></script>
 
-  <!-- Шрифти: Playfair Display — заголовки, Inter — текст -->
+  <!-- Шрифти: Playfair Display — заголовки, Inter — текст.
+       ЛР 12: CSS Google Fonts більше не блокує першу відмальовку (той самий прийом media="print" → "all", що й для іконок):
+       текст одразу показується резервним шрифтом, а фірмовий підставляється після завантаження (display=swap).
+       Перевірено, що на першому екрані резервні шрифти не змінюють висоту блоків, тож підміна не дає зсуву макета. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" media="print" data-media="all" onload="this.media=this.dataset.media">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap"></noscript>
 
-  <!-- Іконки Font Awesome 6 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
-  <!-- Tailwind CSS (CDN) + спільна тема дизайн-системи для всіх сторінок -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="js/tailwind-config.js"></script>
+  <!-- Іконки Font Awesome 6: стилі вантажаться без блокування рендерингу (media="print" → "all" після завантаження),
+       бо іконки декоративні й не потрібні для першого показу тексту; noscript — запасний варіант без JS -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" media="print" data-media="all" onload="this.media=this.dataset.media">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
 
   <!-- Власні стилі: кольори тем через CSS-змінні, фон, фокус -->
   <link rel="stylesheet" href="css/custom-styles.css">
+
+  <!-- Tailwind CSS: заздалегідь зібраний статичний файл (ЛР 12) замість CDN-скрипта, який генерував стилі в браузері.
+       Підключено після custom-styles.css — той самий порядок каскаду, що був із CDN -->
+  <link rel="stylesheet" href="css/tailwind.css">
 
   <!-- defer: скрипти виконуються після побудови DOM і не блокують рендеринг -->
   <script src="js/data.js" defer></script>

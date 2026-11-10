@@ -1,10 +1,17 @@
-// Тема Tailwind — дизайн-система з ЛР №4.
-// Кольори беруться з CSS-змінних (css/custom-styles.css), тому один клас,
-// напр. bg-night або text-ink, автоматично змінюється для світлої та темної теми.
-// <alpha-value> дозволяє писати прозорість: bg-night/80, text-muted/70.
-tailwind.config = {
+// Конфігурація Tailwind CSS 3 для збирання статичного файлу css/tailwind.css (ЛР 12).
+// Раніше Tailwind працював через CDN-скрипт, який генерував стилі в браузері під час кожного
+// завантаження сторінки (повільно й з попередженням у консолі). Тепер CSS збирається заздалегідь:
+//   npm run build:css    — локально (потрібен Node.js)
+//   GitHub Actions       — автоматично перед кожним деплоєм (.github/workflows/deploy.yml)
+// content — файли, у яких Tailwind шукає класи; у CSS потрапляють лише використані класи.
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ['./*.html', './js/**/*.js'],
   theme: {
     extend: {
+      // Кольори беруться з CSS-змінних (css/custom-styles.css), тому один клас,
+      // напр. bg-night або text-ink, автоматично змінюється для світлої та темної теми.
+      // <alpha-value> дозволяє писати прозорість: bg-night/80, text-muted/70.
       colors: {
         night: {
           DEFAULT: 'rgb(var(--c-night) / <alpha-value>)',

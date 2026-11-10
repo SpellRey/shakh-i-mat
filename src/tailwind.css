@@ -1,0 +1,4 @@
+/* Вхідний файл для Tailwind CLI: на його основі збирається css/tailwind.css (див. tailwind.config.js) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -10,29 +10,46 @@
   <meta property="og:site_name" content="Шах і Мат">
   <meta property="og:title" content="Оренда настільних ігор та пошук гравців | Шах і Мат">
   <meta property="og:description" content="Знаходь компанію для гри в шахи та настілки за 60 секунд! P2P-оренда ігор та турніри у твоєму кампусі. Приєднуйся до лобі «Шах і Мат» просто зараз!">
+  <link rel="canonical" href="https://shakh-i-mat.vercel.app/">
+  <meta property="og:url" content="https://shakh-i-mat.vercel.app/">
+  <meta property="og:image" content="https://shakh-i-mat.vercel.app/assets/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Головна сторінка сайту «Шах і Мат» з неоновим шаховим конем">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#0b0b1a">
   <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
-  <!-- ЛР 10: стилі бібліотек у <head> — сторінка не «блимає» нестилізованими слайдером і галереєю (FOUC) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css" integrity="sha384-IFb872aCXZQb6BKRUHmGn0YHKnFl4ylZjkgVRRyMTEQ5bjo/H6xFUiLJm6opOO66" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.css" integrity="sha384-qlUhevqmCF5AxtnfkF0zXJClBzA6GJuX/UrLejCfE61bBGt+zo/My0AJ+ojVmUSb" crossorigin="anonymous">
+  <!-- ЛР 12: постер відео в Hero — найбільший елемент першого екрана (LCP), вантажимо його першим -->
+  <link rel="preload" as="image" href="assets/images/hero-knight.webp" fetchpriority="high">
+  <!-- ЛР 10/12: стилі бібліотек — не блокують показ сторінки (секції нижче першого екрана) -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css" integrity="sha384-IFb872aCXZQb6BKRUHmGn0YHKnFl4ylZjkgVRRyMTEQ5bjo/H6xFUiLJm6opOO66" crossorigin="anonymous" media="print" data-media="all" onload="this.media=this.dataset.media">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.css" integrity="sha384-qlUhevqmCF5AxtnfkF0zXJClBzA6GJuX/UrLejCfE61bBGt+zo/My0AJ+ojVmUSb" crossorigin="anonymous" media="print" data-media="all" onload="this.media=this.dataset.media">
 
   <!-- Тема (світла/темна) застосовується ще до рендерингу, щоб сторінка не «блимала» -->
   <script src="js/theme-init.js"></script>
 
-  <!-- Шрифти: Playfair Display — заголовки, Inter — текст -->
+  <!-- Шрифти: Playfair Display — заголовки, Inter — текст.
+       ЛР 12: CSS Google Fonts більше не блокує першу відмальовку (той самий прийом media="print" → "all", що й для іконок):
+       текст одразу показується резервним шрифтом, а фірмовий підставляється після завантаження (display=swap).
+       Перевірено, що на першому екрані резервні шрифти не змінюють висоту блоків, тож підміна не дає зсуву макета. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" media="print" data-media="all" onload="this.media=this.dataset.media">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap"></noscript>
 
-  <!-- Іконки Font Awesome 6 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
-  <!-- Tailwind CSS (CDN) + спільна тема дизайн-системи для всіх сторінок -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="js/tailwind-config.js"></script>
+  <!-- Іконки Font Awesome 6: стилі вантажаться без блокування рендерингу (media="print" → "all" після завантаження),
+       бо іконки декоративні й не потрібні для першого показу тексту; noscript — запасний варіант без JS -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" media="print" data-media="all" onload="this.media=this.dataset.media">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
 
   <!-- Власні стилі: кольори тем через CSS-змінні, фон, фокус -->
   <link rel="stylesheet" href="css/custom-styles.css">
+
+  <!-- Tailwind CSS: заздалегідь зібраний статичний файл (ЛР 12) замість CDN-скрипта, який генерував стилі в браузері.
+       Підключено після custom-styles.css — той самий порядок каскаду, що був із CDN -->
+  <link rel="stylesheet" href="css/tailwind.css">
 
   <!-- defer: скрипти виконуються після побудови DOM і не блокують рендеринг -->
   <script src="js/data.js" defer></script>
@@ -93,7 +110,7 @@
           <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-secondary/40 bg-night/60 px-4 py-1 text-sm font-semibold uppercase tracking-wider text-secondary">
             <i class="fa-solid fa-chess-knight" aria-hidden="true"></i> Ігрове лобі твого кампусу
           </p>
-          <h1 id="hero-title" class="font-heading text-[2.25rem] font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">Твій наступний хід:<span class="sr-only"> знаходь компанію та настілки за хвилину</span><span class="block min-h-[3.3em] text-secondary min-[360px]:min-h-[2.2em]" aria-hidden="true"><span id="typed-text">знаходь компанію та настілки за хвилину</span></span></h1>
+          <h1 id="hero-title" class="font-heading text-[2.25rem] font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">Твій наступний хід:<span class="sr-only"> знаходь компанію та настілки за хвилину</span><span class="block min-h-[3.3em] text-secondary min-[360px]:min-h-[2.2em]" aria-hidden="true"><span id="typed-text">знаходь компанію на вечір</span></span></h1>
           <p class="mt-6 max-w-[40ch] text-lg leading-snug text-ink/90 sm:text-xl lg:text-2xl">Швидкий матчинг гравців у гуртожитку, орендуй топові ігри у сусідів без зайвих витрат і збирай власний турнір.</p>
           <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6">
             <!-- Головна дія: помітна, з неоновим світінням -->
@@ -193,7 +210,7 @@
           <li>
             <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
               <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/500px-Carcassonne_in_Kaisla.jpg" alt="Партія в «Каркассон»: розкладені тайли з містами й дорогами та фішки гравців" width="500" height="375" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: JIP, CC BY-SA 4.0, Wikimedia Commons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/500px-Carcassonne_in_Kaisla.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/500px-Carcassonne_in_Kaisla.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/960px-Carcassonne_in_Kaisla.jpg 960w" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" alt="Партія в «Каркассон»: розкладені тайли з містами й дорогами та фішки гравців" width="500" height="375" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: JIP, CC BY-SA 4.0, Wikimedia Commons">
               </div>
               <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Стратегія · 2–5 гравців</p>
               <h3 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
@@ -206,7 +223,7 @@
           <li>
             <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
               <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/500px-Pandemic_board_game.jpg" alt="Ігрове поле «Пандемії» з мапою світу та кубиками хвороб" width="500" height="375" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: Padaguan, CC BY-SA 4.0, Wikimedia Commons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/500px-Pandemic_board_game.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/500px-Pandemic_board_game.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/960px-Pandemic_board_game.jpg 960w" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" alt="Ігрове поле «Пандемії» з мапою світу та кубиками хвороб" width="500" height="375" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: Padaguan, CC BY-SA 4.0, Wikimedia Commons">
               </div>
               <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Кооператив · 2–4 гравців</p>
               <h3 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
@@ -219,7 +236,7 @@
           <li>
             <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
               <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/500px-Chess_game_Staunton_No._6.jpg" alt="Дерев’яні шахові фігури Стаунтона на дошці в початковій позиції" width="500" height="307" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: Wilfredor, CC0, Wikimedia Commons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/500px-Chess_game_Staunton_No._6.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/500px-Chess_game_Staunton_No._6.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/960px-Chess_game_Staunton_No._6.jpg 960w" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" alt="Дерев’яні шахові фігури Стаунтона на дошці в початковій позиції" width="500" height="307" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: Wilfredor, CC0, Wikimedia Commons">
               </div>
               <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Стратегія · 2 гравців</p>
               <h3 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
@@ -232,7 +249,7 @@
           <li>
             <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
               <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/500px-Codenames_board_game.jpg" alt="Розкладені картки агентів у грі «Коднеймс»" width="500" height="375" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: JIP, CC BY-SA 3.0, Wikimedia Commons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/500px-Codenames_board_game.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/500px-Codenames_board_game.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/960px-Codenames_board_game.jpg 960w" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" alt="Розкладені картки агентів у грі «Коднеймс»" width="500" height="375" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: JIP, CC BY-SA 3.0, Wikimedia Commons">
               </div>
               <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Партійна · 4–8 гравців</p>
               <h3 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
@@ -245,7 +262,7 @@
           <li>
             <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
               <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/500px-Dixit_game_0001.jpg" alt="Гравці викладають ілюстровані картки «Діксіт» біля коробки-поля для підрахунку очок" width="500" height="333" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: yoppy, CC BY 2.0, Wikimedia Commons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/500px-Dixit_game_0001.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/500px-Dixit_game_0001.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/960px-Dixit_game_0001.jpg 960w" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" alt="Гравці викладають ілюстровані картки «Діксіт» біля коробки-поля для підрахунку очок" width="500" height="333" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: yoppy, CC BY 2.0, Wikimedia Commons">
               </div>
               <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Партійна · 3–8 гравців</p>
               <h3 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
@@ -258,7 +275,7 @@
           <li>
             <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
               <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/500px-Settlers_of_Catan_completed.jpg" alt="Завершена партія «Катану»: острів з гексів, дороги й поселення гравців" width="500" height="315" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: Fritzmann2002, CC BY-SA 4.0, Wikimedia Commons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/500px-Settlers_of_Catan_completed.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/500px-Settlers_of_Catan_completed.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/960px-Settlers_of_Catan_completed.jpg 960w" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" alt="Завершена партія «Катану»: острів з гексів, дороги й поселення гравців" width="500" height="315" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: Fritzmann2002, CC BY-SA 4.0, Wikimedia Commons">
               </div>
               <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Економіка · 3–4 гравців</p>
               <h3 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
@@ -367,90 +384,99 @@
         <ul class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
           <li>
             <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
-               href="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/1280px-Chess_game_Staunton_No._6.jpg" data-fancybox="games-gallery" data-caption="Шахи · Стратегія, 2 гравців. Фото: Wilfredor, CC0" aria-label="Відкрити фото: Шахи">
-              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/500px-Chess_game_Staunton_No._6.jpg" alt="Дерев’яні шахові фігури Стаунтона на дошці в початковій позиції" width="500" height="307" loading="lazy" decoding="async">
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/1280px-Chess_game_Staunton_No._6.jpg" data-fancybox="games-gallery" data-caption="Шахи · Стратегія, 2 гравців. Фото: Wilfredor, CC0">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/500px-Chess_game_Staunton_No._6.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/500px-Chess_game_Staunton_No._6.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/960px-Chess_game_Staunton_No._6.jpg 960w" sizes="(min-width: 1024px) 420px, 50vw" alt="Дерев’яні шахові фігури Стаунтона на дошці в початковій позиції" width="500" height="307" loading="lazy" decoding="async">
               <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
-                <span class="font-semibold">Шахи</span>
+                <!-- ЛР 12: «Відкрити фото» — прихований текст замість aria-label, щоб доступна назва посилання містила видимий підпис (аудит label-content-name-mismatch) -->
+                <span class="font-semibold"><span class="sr-only">Відкрити фото: </span>Шахи</span>
                 <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
               </span>
             </a>
           </li>
           <li>
             <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
-               href="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/1280px-Carcassonne_in_Kaisla.jpg" data-fancybox="games-gallery" data-caption="Каркассон · Стратегія, 2–5 гравців. Фото: JIP, CC BY-SA 4.0" aria-label="Відкрити фото: Каркассон">
-              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/500px-Carcassonne_in_Kaisla.jpg" alt="Партія в «Каркассон»: розкладені тайли з містами й дорогами та фішки гравців" width="500" height="375" loading="lazy" decoding="async">
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/1280px-Carcassonne_in_Kaisla.jpg" data-fancybox="games-gallery" data-caption="Каркассон · Стратегія, 2–5 гравців. Фото: JIP, CC BY-SA 4.0">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/500px-Carcassonne_in_Kaisla.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/500px-Carcassonne_in_Kaisla.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/960px-Carcassonne_in_Kaisla.jpg 960w" sizes="(min-width: 1024px) 420px, 50vw" alt="Партія в «Каркассон»: розкладені тайли з містами й дорогами та фішки гравців" width="500" height="375" loading="lazy" decoding="async">
               <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
-                <span class="font-semibold">Каркассон</span>
+                <!-- ЛР 12: «Відкрити фото» — прихований текст замість aria-label, щоб доступна назва посилання містила видимий підпис (аудит label-content-name-mismatch) -->
+                <span class="font-semibold"><span class="sr-only">Відкрити фото: </span>Каркассон</span>
                 <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
               </span>
             </a>
           </li>
           <li>
             <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
-               href="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/1280px-Pandemic_board_game.jpg" data-fancybox="games-gallery" data-caption="Пандемія · Кооператив, 2–4 гравців. Фото: Padaguan, CC BY-SA 4.0" aria-label="Відкрити фото: Пандемія">
-              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/500px-Pandemic_board_game.jpg" alt="Ігрове поле «Пандемії» з мапою світу та кубиками хвороб" width="500" height="375" loading="lazy" decoding="async">
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/1280px-Pandemic_board_game.jpg" data-fancybox="games-gallery" data-caption="Пандемія · Кооператив, 2–4 гравців. Фото: Padaguan, CC BY-SA 4.0">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/500px-Pandemic_board_game.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/500px-Pandemic_board_game.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/960px-Pandemic_board_game.jpg 960w" sizes="(min-width: 1024px) 420px, 50vw" alt="Ігрове поле «Пандемії» з мапою світу та кубиками хвороб" width="500" height="375" loading="lazy" decoding="async">
               <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
-                <span class="font-semibold">Пандемія</span>
+                <!-- ЛР 12: «Відкрити фото» — прихований текст замість aria-label, щоб доступна назва посилання містила видимий підпис (аудит label-content-name-mismatch) -->
+                <span class="font-semibold"><span class="sr-only">Відкрити фото: </span>Пандемія</span>
                 <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
               </span>
             </a>
           </li>
           <li>
             <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
-               href="https://upload.wikimedia.org/wikipedia/commons/1/19/Taboo_02.jpg" data-fancybox="games-gallery" data-caption="Табу · Партійна, 4–10 гравців. Фото: FH (французька Вікіпедія), CC BY-SA 1.0" aria-label="Відкрити фото: Табу">
+               href="https://upload.wikimedia.org/wikipedia/commons/1/19/Taboo_02.jpg" data-fancybox="games-gallery" data-caption="Табу · Партійна, 4–10 гравців. Фото: FH (французька Вікіпедія), CC BY-SA 1.0">
               <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/1/19/Taboo_02.jpg" alt="Коробка, ігрове поле, пісковий годинник і картки гри «Табу»" width="405" height="336" loading="lazy" decoding="async">
               <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
-                <span class="font-semibold">Табу</span>
+                <!-- ЛР 12: «Відкрити фото» — прихований текст замість aria-label, щоб доступна назва посилання містила видимий підпис (аудит label-content-name-mismatch) -->
+                <span class="font-semibold"><span class="sr-only">Відкрити фото: </span>Табу</span>
                 <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
               </span>
             </a>
           </li>
           <li>
             <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
-               href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/1280px-Monopoly_board_game.jpg" data-fancybox="games-gallery" data-caption="Монополія · Економіка, 2–6 гравців. Фото: Yahya, CC BY-SA 4.0" aria-label="Відкрити фото: Монополія">
-              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/500px-Monopoly_board_game.jpg" alt="Поле «Монополії» з картками власності та паперовими грошима під час партії" width="500" height="375" loading="lazy" decoding="async">
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/1280px-Monopoly_board_game.jpg" data-fancybox="games-gallery" data-caption="Монополія · Економіка, 2–6 гравців. Фото: Yahya, CC BY-SA 4.0">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/500px-Monopoly_board_game.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/500px-Monopoly_board_game.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/960px-Monopoly_board_game.jpg 960w" sizes="(min-width: 1024px) 420px, 50vw" alt="Поле «Монополії» з картками власності та паперовими грошима під час партії" width="500" height="375" loading="lazy" decoding="async">
               <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
-                <span class="font-semibold">Монополія</span>
+                <!-- ЛР 12: «Відкрити фото» — прихований текст замість aria-label, щоб доступна назва посилання містила видимий підпис (аудит label-content-name-mismatch) -->
+                <span class="font-semibold"><span class="sr-only">Відкрити фото: </span>Монополія</span>
                 <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
               </span>
             </a>
           </li>
           <li>
             <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
-               href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/1280px-Dixit_game_0001.jpg" data-fancybox="games-gallery" data-caption="Діксіт · Партійна, 3–8 гравців. Фото: yoppy, CC BY 2.0" aria-label="Відкрити фото: Діксіт">
-              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/500px-Dixit_game_0001.jpg" alt="Гравці викладають ілюстровані картки «Діксіт» біля коробки-поля для підрахунку очок" width="500" height="333" loading="lazy" decoding="async">
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/1280px-Dixit_game_0001.jpg" data-fancybox="games-gallery" data-caption="Діксіт · Партійна, 3–8 гравців. Фото: yoppy, CC BY 2.0">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/500px-Dixit_game_0001.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/500px-Dixit_game_0001.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/960px-Dixit_game_0001.jpg 960w" sizes="(min-width: 1024px) 420px, 50vw" alt="Гравці викладають ілюстровані картки «Діксіт» біля коробки-поля для підрахунку очок" width="500" height="333" loading="lazy" decoding="async">
               <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
-                <span class="font-semibold">Діксіт</span>
+                <!-- ЛР 12: «Відкрити фото» — прихований текст замість aria-label, щоб доступна назва посилання містила видимий підпис (аудит label-content-name-mismatch) -->
+                <span class="font-semibold"><span class="sr-only">Відкрити фото: </span>Діксіт</span>
                 <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
               </span>
             </a>
           </li>
           <li>
             <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
-               href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/1280px-Settlers_of_Catan_completed.jpg" data-fancybox="games-gallery" data-caption="Катан · Економіка, 3–4 гравців. Фото: Fritzmann2002, CC BY-SA 4.0" aria-label="Відкрити фото: Катан">
-              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/500px-Settlers_of_Catan_completed.jpg" alt="Завершена партія «Катану»: острів з гексів, дороги й поселення гравців" width="500" height="315" loading="lazy" decoding="async">
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/1280px-Settlers_of_Catan_completed.jpg" data-fancybox="games-gallery" data-caption="Катан · Економіка, 3–4 гравців. Фото: Fritzmann2002, CC BY-SA 4.0">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/500px-Settlers_of_Catan_completed.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/500px-Settlers_of_Catan_completed.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/960px-Settlers_of_Catan_completed.jpg 960w" sizes="(min-width: 1024px) 420px, 50vw" alt="Завершена партія «Катану»: острів з гексів, дороги й поселення гравців" width="500" height="315" loading="lazy" decoding="async">
               <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
-                <span class="font-semibold">Катан</span>
+                <!-- ЛР 12: «Відкрити фото» — прихований текст замість aria-label, щоб доступна назва посилання містила видимий підпис (аудит label-content-name-mismatch) -->
+                <span class="font-semibold"><span class="sr-only">Відкрити фото: </span>Катан</span>
                 <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
               </span>
             </a>
           </li>
           <li>
             <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
-               href="https://upload.wikimedia.org/wikipedia/commons/8/84/Dobble_jeu.jpg" data-fancybox="games-gallery" data-caption="Доббл · Партійна, 2–8 гравців. Фото: zizou man, CC BY 2.0" aria-label="Відкрити фото: Доббл">
+               href="https://upload.wikimedia.org/wikipedia/commons/8/84/Dobble_jeu.jpg" data-fancybox="games-gallery" data-caption="Доббл · Партійна, 2–8 гравців. Фото: zizou man, CC BY 2.0">
               <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Dobble_jeu.jpg" alt="Круглі картки «Доббл» з кольоровими символами на столі" width="750" height="513" loading="lazy" decoding="async">
               <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
-                <span class="font-semibold">Доббл</span>
+                <!-- ЛР 12: «Відкрити фото» — прихований текст замість aria-label, щоб доступна назва посилання містила видимий підпис (аудит label-content-name-mismatch) -->
+                <span class="font-semibold"><span class="sr-only">Відкрити фото: </span>Доббл</span>
                 <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
               </span>
             </a>
           </li>
           <li>
             <a class="group relative block overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:border-secondary/70 hover:shadow-neon-cyan focus-visible:shadow-neon-cyan motion-reduce:transition-none"
-               href="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/1280px-Codenames_board_game.jpg" data-fancybox="games-gallery" data-caption="Коднеймс · Партійна, 4–8 гравців. Фото: JIP, CC BY-SA 3.0" aria-label="Відкрити фото: Коднеймс">
-              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/500px-Codenames_board_game.jpg" alt="Розкладені картки агентів у грі «Коднеймс»" width="500" height="375" loading="lazy" decoding="async">
+               href="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/1280px-Codenames_board_game.jpg" data-fancybox="games-gallery" data-caption="Коднеймс · Партійна, 4–8 гравців. Фото: JIP, CC BY-SA 3.0">
+              <img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/500px-Codenames_board_game.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/500px-Codenames_board_game.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/960px-Codenames_board_game.jpg 960w" sizes="(min-width: 1024px) 420px, 50vw" alt="Розкладені картки агентів у грі «Коднеймс»" width="500" height="375" loading="lazy" decoding="async">
               <span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10 text-white">
-                <span class="font-semibold">Коднеймс</span>
+                <!-- ЛР 12: «Відкрити фото» — прихований текст замість aria-label, щоб доступна назва посилання містила видимий підпис (аудит label-content-name-mismatch) -->
+                <span class="font-semibold"><span class="sr-only">Відкрити фото: </span>Коднеймс</span>
                 <i class="fa-solid fa-magnifying-glass-plus opacity-80 transition group-hover:scale-110 group-hover:text-secondary" aria-hidden="true"></i>
               </span>
             </a>
@@ -563,7 +589,7 @@
             <button type="button" class="reviews-next grid h-11 w-11 place-items-center rounded-full border border-line bg-surface text-lg transition hover:border-secondary hover:text-secondary hover:shadow-neon-cyan-sm disabled:opacity-40" aria-label="Наступний відгук"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
           </div>
         </div>
-        <div class="swiper reviews-swiper" aria-roledescription="карусель" aria-label="Відгуки студентів">
+        <div class="swiper reviews-swiper" role="region" aria-roledescription="карусель" aria-label="Відгуки студентів">
           <div class="swiper-wrapper">
             <div class="swiper-slide !h-auto">
               <figure class="group flex h-full flex-col gap-4 rounded-2xl border border-line bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-warning/60 hover:shadow-neon-gold motion-reduce:transition-none motion-reduce:hover:translate-y-0">
@@ -811,11 +837,9 @@
   </footer>
 
   <!-- ================= ЛР 10: JS-бібліотеки (Vanilla JS, без jQuery) перед </body> =================
-       Порядок важливий: спершу бібліотеки, потім js/main.js з ініціалізацією (new Swiper, Fancybox.bind, new Typed) -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js" integrity="sha384-JiF4eFN9V3I2Fry7TzFM3XKdq0P3abiVxpOeHjGz4cwvas+uNg6pFWVmuD6MKXqG" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.umd.js" integrity="sha384-BodKYo5iRmFaqEaP1o8AAu9hCHqLvNhSWEg12QF1IjPnl1SgsrwQMSMKUB4POJ18" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js" integrity="sha384-cMrTlShXEGSdSFA359p+3aVUxK/R+0TAfbRZMcTlAn8yqzxEDj05QsS65nTFMMj4" crossorigin="anonymous"></script>
-  <script src="js/main.js"></script>
-  <script src="js/widget.js"></script>
+       Typed.js підключено одразу; Swiper і Fancybox js/main.js вантажить «ліниво» з тими самими SRI-хешами (ЛР 12) -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js" integrity="sha384-cMrTlShXEGSdSFA359p+3aVUxK/R+0TAfbRZMcTlAn8yqzxEDj05QsS65nTFMMj4" crossorigin="anonymous" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/widget.js" defer></script>
 </body>
 </html>

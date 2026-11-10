@@ -87,7 +87,10 @@
         }).observe(video);
       }
       calm.addEventListener('change', update);
-      update();
+      // ЛР 12: відео стартує після повного завантаження сторінки — спершу вантажаться текст, стилі й постер,
+      // а 0,3 МБ відео не конкурують з ними за мережу (краще LCP); до того видно постер
+      if (document.readyState === 'complete') update();
+      else window.addEventListener('load', update, { once: true });
     },
 
     // ================= КАТАЛОГ: фільтри, пошук і сортування =================

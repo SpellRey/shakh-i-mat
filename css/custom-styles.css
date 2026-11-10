@@ -172,20 +172,44 @@ html[data-theme="light"] .logo-dark {
    Swiper читає власні CSS-змінні, тому достатньо перевизначити їх через змінні теми. */
 .reviews-swiper {
   --swiper-theme-color: rgb(var(--c-secondary));
-  --swiper-pagination-bullet-inactive-color: rgb(var(--c-muted));
-  --swiper-pagination-bullet-inactive-opacity: 0.45;
-  --swiper-pagination-bullet-size: 10px;
-  --swiper-pagination-bullet-horizontal-gap: 6px;
+  /* ЛР 12: крапка пагінації — область натискання 24×24 px (вимога WCAG 2.2 «Target Size», аудит Lighthouse),
+     а видима крапка 10 px малюється псевдоелементом ::before усередині неї */
+  --swiper-pagination-bullet-size: 24px;
+  --swiper-pagination-bullet-horizontal-gap: 2px;
+  --swiper-pagination-bullet-inactive-color: transparent;
+  --swiper-pagination-bullet-inactive-opacity: 1;
+  --swiper-pagination-color: transparent;
   padding-bottom: 3rem; /* місце для крапок пагінації під картками */
 }
-.reviews-swiper .swiper-pagination-bullet-active {
+.reviews-swiper .swiper-pagination-bullet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.reviews-swiper .swiper-pagination-bullet::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgb(var(--c-muted) / 0.45);
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+.reviews-swiper .swiper-pagination-bullet-active::before {
+  background: rgb(var(--c-secondary));
   box-shadow: 0 0 10px rgb(var(--c-secondary) / 0.8);
 }
 
-/* Курсор Typed.js — бірюзовий, як і рядок, що друкується */
-.typed-cursor {
-  color: rgb(var(--c-secondary));
-  font-weight: 400;
+/* Курсор Typed.js — бірюзовий, як і рядок, що друкується.
+   ЛР 12: замість окремого елемента «|» (Typed.js вставляє його після тексту) курсор — це права рамка самого рядка.
+   Окремий «|» стрибав між рядками, коли фраза переносилась, і Lighthouse рахував кожен стрибок як зсув макета (CLS);
+   рамка рухається разом із текстом і зсуву не створює. */
+#typed-text.is-typing {
+  border-right: 0.06em solid rgb(var(--c-secondary));
+  padding-right: 0.06em;
+  animation: typed-caret-blink 1s step-end infinite;
+}
+@keyframes typed-caret-blink {
+  50% { border-right-color: transparent; }
 }
 
 /* Fancybox: акцентний колір (кнопки, рамка активної мініатюри) — фірмовий бірюзовий */

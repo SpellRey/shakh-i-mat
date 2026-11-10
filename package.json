@@ -1,0 +1,12 @@
+{
+  "name": "shakh-i-mat",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Шах і Мат — оренда настільних ігор і пошук гравців у гуртожитку (статичний сайт)",
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i src/tailwind.css -o css/tailwind.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}

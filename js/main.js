@@ -1,15 +1,67 @@
 // =====================================================================
 // Ініціалізація JS-бібліотек головної сторінки (ЛР 10): Swiper.js, Fancybox, Typed.js.
-// Бібліотеки підключені через CDN перед </body> (index.html), цей файл — одразу після них.
-// Уся ініціалізація — всередині DOMContentLoaded: код запускається, коли HTML уже розібрано
-// і потрібні елементи (.reviews-swiper, [data-fancybox], #typed-text) точно існують.
+// Typed.js підключено в index.html перед </body>; Swiper і Fancybox (≈ 300 КБ разом) з ЛР 12
+// довантажуються «ліниво» — коли секція відгуків чи галереї наближається до екрана. Це зменшує обсяг
+// JavaScript, який браузер розбирає під час першого завантаження (метрика TBT у Lighthouse).
+// Уся ініціалізація — всередині DOMContentLoaded: код запускається, коли HTML уже розібрано.
 // =====================================================================
+const CDN_LIBS = {
+  swiper: {
+    src: 'https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js',
+    integrity: 'sha384-JiF4eFN9V3I2Fry7TzFM3XKdq0P3abiVxpOeHjGz4cwvas+uNg6pFWVmuD6MKXqG',
+  },
+  fancybox: {
+    src: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.umd.js',
+    integrity: 'sha384-BodKYo5iRmFaqEaP1o8AAu9hCHqLvNhSWEg12QF1IjPnl1SgsrwQMSMKUB4POJ18',
+  },
+};
+
+// Підключає скрипт бібліотеки з тим самим SRI-хешем, що й раніше в HTML; повторний виклик не дублює тег
+function loadLibrary({ src, integrity }) {
+  const existing = document.querySelector(`script[src="${src}"]`);
+  if (existing) return existing.loaded;
+  const script = document.createElement('script');
+  script.src = src;
+  script.integrity = integrity;
+  script.crossOrigin = 'anonymous';
+  script.loaded = new Promise((resolve, reject) => {
+    script.onload = resolve;
+    script.onerror = () => reject(new Error(`Не вдалося завантажити ${src}`));
+  });
+  document.body.appendChild(script);
+  return script.loaded;
+}
+
+// Викликає callback один раз, коли елемент за 600 px від екрана (або одразу, якщо IntersectionObserver немає)
+function whenNearViewport(el, callback) {
+  if (!el) return;
+  if (!('IntersectionObserver' in window)) {
+    callback();
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    if (entries.some((entry) => entry.isIntersecting)) {
+      observer.disconnect();
+      callback();
+    }
+  }, { rootMargin: '600px 0px' });
+  observer.observe(el);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // Користувачі з налаштуванням «менше руху» не отримують автопрокрутки й друкування тексту
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  initReviewsSlider(reduceMotion);
-  initGallery();
+  whenNearViewport(document.querySelector('.reviews-swiper'), () => {
+    loadLibrary(CDN_LIBS.swiper)
+      .then(() => initReviewsSlider(reduceMotion))
+      .catch((error) => console.warn('[Swiper]', error.message, '— відгуки показано без каруселі.'));
+  });
+  whenNearViewport(document.getElementById('gallery'), () => {
+    loadLibrary(CDN_LIBS.fancybox)
+      .then(initGallery)
+      .catch((error) => console.warn('[Fancybox]', error.message, '— фото відкриваються як звичайні посилання.'));
+  });
   initTypedHero(reduceMotion);
 });
 
@@ -76,6 +128,9 @@ function initTypedHero(reduceMotion) {
   // у режимі «менше руху» лишається статичний запасний текст з HTML
   if (reduceMotion || typeof Typed === 'undefined' || !document.getElementById('typed-text')) return;
 
+  // ЛР 12: власний курсор Typed.js вимкнено (showCursor: false) — його замінює CSS-рамка #typed-text.is-typing,
+  // яка не створює зсувів макета (CLS) під час переносу фрази на новий рядок
+  document.getElementById('typed-text').classList.add('is-typing');
   new Typed('#typed-text', {
     strings: [
       'знаходь компанію на вечір',
@@ -89,5 +144,6 @@ function initTypedHero(reduceMotion) {
     startDelay: 400,
     smartBackspace: true, // стирає лише відмінну частину («знаходь …» не передруковується)
     loop: true,
+    showCursor: false,
   });
 }
