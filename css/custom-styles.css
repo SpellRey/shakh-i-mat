@@ -150,6 +150,23 @@ html[data-theme="light"] .logo-dark {
   object-fit: cover;
   object-position: 72% center;
   opacity: 0.4;
+  /* плавна зміна відео при перемиканні теми: нове проявляється, старе ховається після переходу */
+  transition: opacity 0.4s ease, visibility 0s;
+}
+
+/* Hero під тему: два відео лежать одне на одному, видно лише відео поточної теми.
+   У світлій темі тло hero — колір фону світлого відео (#edf3f4), щоб лівий край, що плавно зникає, не мав межі. */
+html[data-theme="light"] .hero-section {
+  background-color: #edf3f4;
+  /* бірюзовий трохи темніший, ніж на решті сторінки: тло світлого відео сіро-блакитне (до #c8d4da),
+     і текст кнопки «Орендувати гру» та бейджа має тримати контраст ≥ 4,5 : 1 (WCAG AA) */
+  --c-secondary: 0 92 108;
+}
+html[data-theme="light"] .hero-media--dark,
+html:not([data-theme="light"]) .hero-media--light {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0s linear 0.4s;
 }
 
 /* Широкий горизонтальний екран: відео праворуч на всю висоту hero, лівий край плавно зникає.

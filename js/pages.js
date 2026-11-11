@@ -67,16 +67,27 @@
     // Відео запускається з JS, а не атрибутом autoplay: якщо в системі ввімкнено «менше руху»,
     // лишається лише заставка (poster). Коли hero прокручено за межі екрана, відео стає на паузу.
     home() {
-      const video = document.querySelector('[data-hero-video]');
-      if (!video) return;
+      // ЛР 12: два відео — для темної й світлої теми (data-hero-video="dark" | "light"); грає лише відео поточної теми
+      const videos = Array.from(document.querySelectorAll('[data-hero-video]'));
+      if (!videos.length) return;
+      const hero = videos[0].parentElement;
       const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
       let visible = true;
+      let pageLoaded = document.readyState === 'complete';
+
+      // відео поточної теми; якщо такого немає — перше
+      const themeVideo = () => {
+        const theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        return videos.find((v) => v.dataset.heroVideo === theme) || videos[0];
+      };
+      let active = themeVideo();
 
       const update = () => {
-        if (visible && !calm.matches) {
-          video.play().catch(() => {}); // браузер може заборонити автозапуск — тоді видно заставку
+        videos.forEach((v) => { if (v !== active) v.pause(); });
+        if (pageLoaded && visible && !calm.matches) {
+          active.play().catch(() => {}); // браузер може заборонити автозапуск — тоді видно заставку
         } else {
-          video.pause();
+          active.pause();
         }
       };
 
@@ -84,13 +95,27 @@
         new IntersectionObserver(([entry]) => {
           visible = entry.isIntersecting;
           update();
-        }).observe(video);
+        }).observe(hero);
       }
       calm.addEventListener('change', update);
+
+      // Перемикання теми: нове відео стартує з того самого моменту оберту (обидва ролики по 6,6 с), тож кінь не «стрибає»
+      new MutationObserver(() => {
+        const next = themeVideo();
+        if (next === active) return;
+        try {
+          next.currentTime = active.currentTime;
+        } catch (error) {
+          /* метадані ще не завантажені — відео почнеться з початку */
+        }
+        active = next;
+        update();
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
       // ЛР 12: відео стартує після повного завантаження сторінки — спершу вантажаться текст, стилі й постер,
       // а 0,3 МБ відео не конкурують з ними за мережу (краще LCP); до того видно постер
-      if (document.readyState === 'complete') update();
-      else window.addEventListener('load', update, { once: true });
+      if (pageLoaded) update();
+      else window.addEventListener('load', () => { pageLoaded = true; update(); }, { once: true });
     },
 
     // ================= КАТАЛОГ: фільтри, пошук і сортування =================

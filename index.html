@@ -20,7 +20,20 @@
   <meta name="theme-color" content="#0b0b1a">
   <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
   <!-- ЛР 12: постер відео в Hero — найбільший елемент першого екрана (LCP), вантажимо його першим -->
-  <link rel="preload" as="image" href="assets/images/hero-knight.webp" fetchpriority="high">
+  <!-- Постер обирається під тему (світла / темна): та сама логіка, що в theme-init.js — вибір користувача, інакше тема системи -->
+  <script>
+    (function () {
+      var theme = null;
+      try { theme = localStorage.getItem('shm-theme'); } catch (error) { theme = null; }
+      theme = theme || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      var link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.setAttribute('fetchpriority', 'high');
+      link.href = theme === 'light' ? 'assets/images/hero-knight-light.webp' : 'assets/images/hero-knight.webp';
+      document.head.appendChild(link);
+    })();
+  </script>
   <!-- ЛР 10/12: стилі бібліотек — не блокують показ сторінки (секції нижче першого екрана) -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css" integrity="sha384-IFb872aCXZQb6BKRUHmGn0YHKnFl4ylZjkgVRRyMTEQ5bjo/H6xFUiLJm6opOO66" crossorigin="anonymous" media="print" data-media="all" onload="this.media=this.dataset.media">
@@ -96,12 +109,18 @@
   </header>
 
   <main id="main">
-    <!-- ================= HERO: завжди темний (data-theme="dark"), бо фото коня на темному тлі ================= -->
-    <section data-theme="dark" class="relative isolate text-ink flex min-h-[560px] items-center overflow-hidden bg-[#050b17] py-16 md:min-h-[var(--hero-height)] md:py-12" aria-labelledby="hero-title">
-      <!-- на телефоні й планшеті відео — приглушений фон під текстом; з 1024px воно стоїть праворуч на всю висоту, а лівий край плавно зникає -->
-      <video class="hero-media absolute -z-10" data-hero-video muted loop playsinline preload="none" poster="assets/images/hero-knight.webp" width="1344" height="768" aria-hidden="true">
+    <!-- ================= HERO: відео з конем під тему сайту — темне або світле ================= -->
+    <section class="hero-section relative isolate text-ink flex min-h-[560px] items-center overflow-hidden bg-[#050b17] py-16 md:min-h-[var(--hero-height)] md:py-12" aria-labelledby="hero-title">
+      <!-- на телефоні й планшеті відео — приглушений фон під текстом; з 1024px воно стоїть праворуч на всю висоту, а лівий край плавно зникає.
+           Два відео: для темної й світлої теми (обидва згенеровано в Leonardo AI). Видно лише відео поточної теми (css/custom-styles.css),
+           а js/pages.js запускає тільки його — файл іншого відео не завантажується, доки тему не перемкнуть. -->
+      <video class="hero-media hero-media--dark absolute -z-10" data-hero-video="dark" muted loop playsinline preload="none" poster="assets/images/hero-knight.webp" width="1344" height="768" aria-hidden="true">
         <source src="assets/video/hero-knight.webm" type="video/webm">
         <source src="assets/video/hero-knight.mp4" type="video/mp4">
+      </video>
+      <video class="hero-media hero-media--light absolute -z-10" data-hero-video="light" muted loop playsinline preload="none" poster="assets/images/hero-knight-light.webp" width="1344" height="768" aria-hidden="true">
+        <source src="assets/video/hero-knight-light.webm" type="video/webm">
+        <source src="assets/video/hero-knight-light.mp4" type="video/mp4">
       </video>
       <div class="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-b from-transparent to-night-deep" aria-hidden="true"></div>
 
