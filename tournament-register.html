@@ -85,7 +85,7 @@
             <li><a class="relative block rounded-lg px-2 py-3 transition duration-200 hover:text-secondary hover:[text-shadow:0_0_12px_rgb(var(--c-secondary)/0.75)] lg:p-1 lg:after:absolute lg:after:inset-x-1 lg:after:-bottom-1 lg:after:h-0.5 lg:after:origin-left lg:after:scale-x-0 lg:after:rounded-full lg:after:bg-secondary lg:after:shadow-neon-cyan-sm lg:after:transition-transform lg:after:duration-300 lg:hover:after:scale-x-100 motion-reduce:lg:after:transition-none" href="contact.html">Контакти</a></li>
           </ul>
         </nav>
-        <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none w-full lg:w-auto" href="login.html">Увійти</a>
+        <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none w-full lg:w-auto" href="register.html">Реєстрація</a>
       </div>
     </div>
   </header>
@@ -105,23 +105,33 @@
         </ul>
       </section>
 
+      <!-- Форма учасника з клієнтською перевіркою (js/pages.js → 'tournament-register'):
+           помилка показується під полем після взаємодії з ним; aria-invalid і aria-describedby — для скрінрідерів -->
       <form id="register-form" class="rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8 flex flex-col gap-5" novalidate>
         <h2 class="text-2xl font-semibold">Дані учасника</h2>
         <div class="flex flex-col gap-2">
-          <label for="reg-name" class="text-sm font-semibold text-muted">Ім’я та прізвище</label>
-          <input id="reg-name" name="name" type="text" required autocomplete="name" placeholder="Олександр Бондар" class="min-h-[48px] w-full rounded-xl border border-line bg-night/60 px-4 text-ink placeholder:text-muted/70 transition focus:border-secondary">
+          <label for="reg-name" class="text-sm font-semibold text-muted">Ім’я та прізвище <span class="text-primary" aria-hidden="true">*</span></label>
+          <input id="reg-name" name="name" type="text" required aria-required="true" aria-invalid="false" aria-describedby="reg-name-hint reg-name-error" maxlength="60" autocomplete="name" placeholder="Олександр Бондар" class="min-h-[48px] w-full rounded-xl border border-line bg-night/60 px-4 text-ink placeholder:text-muted/70 transition focus:border-secondary">
+          <p id="reg-name-hint" class="text-xs text-muted">Як у студентському квитку: ім’я та прізвище через пробіл.</p>
+          <p id="reg-name-error" class="hidden text-sm font-medium text-danger" aria-live="polite"></p>
         </div>
         <div class="flex flex-col gap-2">
-            <label for="reg-dorm" class="text-sm font-semibold text-muted">Гуртожиток</label>
-            <select id="reg-dorm" name="dorm" class="min-h-[48px] w-full rounded-xl border border-line bg-night/60 px-4 text-ink placeholder:text-muted/70 transition focus:border-secondary">
-              <option value="Гуртожиток №2">Гуртожиток №2</option><option value="Гуртожиток №4" selected>Гуртожиток №4</option><option value="Гуртожиток №5">Гуртожиток №5</option>
-            </select>
-          </div>
-        <div class="flex flex-col gap-2">
-          <label for="reg-contact" class="text-sm font-semibold text-muted">Контакт для зв’язку</label>
-          <input id="reg-contact" name="contact" type="text" required placeholder="Telegram: @username" class="min-h-[48px] w-full rounded-xl border border-line bg-night/60 px-4 text-ink placeholder:text-muted/70 transition focus:border-secondary">
+          <label for="reg-dorm" class="text-sm font-semibold text-muted">Гуртожиток</label>
+          <select id="reg-dorm" name="dorm" aria-invalid="false" aria-describedby="reg-dorm-error" class="min-h-[48px] w-full rounded-xl border border-line bg-night/60 px-4 text-ink placeholder:text-muted/70 transition focus:border-secondary">
+            <option value="Гуртожиток №2">Гуртожиток №2</option><option value="Гуртожиток №4" selected>Гуртожиток №4</option><option value="Гуртожиток №5">Гуртожиток №5</option>
+          </select>
+          <p id="reg-dorm-error" class="hidden text-sm font-medium text-danger" aria-live="polite"></p>
         </div>
-        <label class="flex items-center gap-3"><input type="checkbox" name="agree" required class="h-5 w-5 accent-[#d6124a]"> Погоджуюсь з правилами участі</label>
+        <div class="flex flex-col gap-2">
+          <label for="reg-contact" class="text-sm font-semibold text-muted">Telegram або телефон <span class="text-primary" aria-hidden="true">*</span></label>
+          <input id="reg-contact" name="contact" type="text" required aria-required="true" aria-invalid="false" aria-describedby="reg-contact-hint reg-contact-error" maxlength="40" autocomplete="tel" placeholder="@username або +380501234567" class="min-h-[48px] w-full rounded-xl border border-line bg-night/60 px-4 text-ink placeholder:text-muted/70 transition focus:border-secondary">
+          <p id="reg-contact-hint" class="text-xs text-muted">Telegram — @нікнейм (5–32 латинські літери, цифри, _). Телефон — +380XXXXXXXXX; номер 050 123 45 67 виправимо автоматично.</p>
+          <p id="reg-contact-error" class="hidden text-sm font-medium text-danger" aria-live="polite"></p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label class="flex items-center gap-3"><input id="reg-agree" type="checkbox" name="agree" required aria-required="true" aria-invalid="false" aria-describedby="reg-agree-error" class="h-5 w-5 shrink-0 rounded accent-[#d6124a]"> Погоджуюсь з правилами участі</label>
+          <p id="reg-agree-error" class="hidden text-sm font-medium text-danger" aria-live="polite"></p>
+        </div>
         <div class="flex flex-col gap-3 sm:flex-row">
           <button type="submit" class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-primary bg-primary-strong px-7 py-3 text-lg font-semibold text-white shadow-glow transition duration-200 hover:bg-primary hover:shadow-glow-lg active:translate-y-px motion-reduce:transition-none">Підтвердити участь</button>
           <a class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-line px-6 py-3 font-semibold text-ink transition duration-200 hover:border-secondary hover:text-secondary hover:shadow-neon-cyan-sm active:translate-y-px motion-reduce:transition-none" href="tournament.html?id=chess-cup" data-href="tournament.html?id={id}">Назад</a>

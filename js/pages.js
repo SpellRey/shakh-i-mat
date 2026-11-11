@@ -335,9 +335,134 @@
       fill({ subtitle: `${t.title} · ${t.dateText} · ${t.place}`, seats: `Є вільні місця: ${freeSeats(t)} з ${t.seats}` });
       links({ id: t.id });
       const form = document.getElementById('register-form');
+      const fields = {
+        name: document.getElementById('reg-name'),
+        dorm: document.getElementById('reg-dorm'),
+        contact: document.getElementById('reg-contact'),
+        agree: document.getElementById('reg-agree'),
+      };
+
+      // ---------- Правила перевірки ----------
+      // Ім'я та прізвище: щонайменше два слова з літер (кирилиця й латиниця, \p{L} + прапорець u);
+      // усередині слова дозволені апостроф і дефіс: «Мар’яна Коваль-Лисенко»
+      const FULL_NAME_RE = /^\p{L}[\p{L}'’-]*(?: \p{L}[\p{L}'’-]*)+$/u;
+      // Telegram: @ + 5–32 символи (латинські літери, цифри, _), починається з літери й не закінчується на _
+      const TELEGRAM_RE = /^@[A-Za-z][A-Za-z0-9_]{3,30}[A-Za-z0-9]$/;
+      // Телефон: +380 і рівно 9 цифр
+      const PHONE_RE = /^\+380\d{9}$/;
+      const DORMS = Array.from(fields.dorm.options, (option) => option.value);
+
+      // Нормалізація контакту при виході з поля: «050 123-45-67» → «+380501234567», «username» → «@username»
+      function normalizeContact(value) {
+        const v = value.trim();
+        const digits = v.replace(/[\s()-]/g, '');
+        if (/^\+?\d+$/.test(digits)) {
+          if (/^0\d{9}$/.test(digits)) return '+38' + digits;
+          if (/^380\d{9}$/.test(digits)) return '+' + digits;
+          return digits;
+        }
+        if (/^[A-Za-z][A-Za-z0-9_]{4,31}$/.test(v)) return '@' + v;
+        return v.replace(/^https?:\/\/t\.me\//i, '@').replace(/^t\.me\//i, '@');
+      }
+
+      // Кожна функція повертає текст помилки або '' (поле коректне)
+      const rules = {
+        name(value) {
+          const v = value.trim().replace(/\s+/g, ' ');
+          if (!v) return 'Вкажіть ім’я та прізвище.';
+          if (/\d/.test(v)) return 'Ім’я не може містити цифр.';
+          if (!v.includes(' ')) return 'Додайте прізвище через пробіл, наприклад «Олександр Бондар».';
+          if (!FULL_NAME_RE.test(v)) return 'Лише літери, пробіл, апостроф і дефіс.';
+          if (v.length < 5) return 'Занадто коротко: ім’я та прізвище — щонайменше 5 символів.';
+          return '';
+        },
+        dorm(value) {
+          return DORMS.includes(value) ? '' : 'Оберіть гуртожиток зі списку.';
+        },
+        contact(value) {
+          const v = value.trim();
+          if (!v) return 'Вкажіть Telegram або телефон, щоб організатор міг з вами зв’язатися.';
+          if (v.startsWith('@') || /[A-Za-z_]/.test(v)) {
+            if (TELEGRAM_RE.test(v)) return '';
+            if (v.length < 6) return 'Нікнейм Telegram — щонайменше 5 символів після @.';
+            return 'Нікнейм Telegram: латинські літери, цифри й _, починається з літери.';
+          }
+          return PHONE_RE.test(v) ? '' : 'Телефон у форматі +380XXXXXXXXX (9 цифр після +380).';
+        },
+        agree(_, field) {
+          return field.checked ? '' : 'Потрібна згода з правилами участі.';
+        },
+      };
+
+      // ---------- Стан поля: помилка (червона рамка + текст) або успіх (зелена рамка) ----------
+      function setState(field, message) {
+        const error = document.getElementById(`${field.id}-error`);
+        const invalid = Boolean(message);
+        // зелену рамку показуємо лише текстовим полям; список і чекбокс у нормі лишаються звичайними
+        const success = !invalid && field.type !== 'checkbox' && field.tagName !== 'SELECT';
+        field.classList.toggle('border-danger', invalid);
+        field.classList.toggle('border-success', success);
+        field.classList.toggle('border-line', !invalid && !success);
+        if (field.type === 'checkbox') {
+          field.classList.toggle('ring-2', invalid);
+          field.classList.toggle('ring-danger', invalid);
+          field.classList.toggle('ring-offset-2', invalid);
+        }
+        field.setAttribute('aria-invalid', String(invalid));
+        error.textContent = message;
+        error.classList.toggle('hidden', !invalid);
+      }
+
+      // контакт перевіряється вже в нормалізованому вигляді: «050 123 45 67» валідний ще до виходу з поля
+      const valueOf = (name) => (name === 'contact' ? normalizeContact(fields[name].value) : fields[name].value);
+
+      function check(name) {
+        const field = fields[name];
+        const message = rules[name](valueOf(name), field);
+        setState(field, message);
+        return !message;
+      }
+
+      // Помилки показуються лише після взаємодії з полем (не одразу при відкритті сторінки).
+      // Поки користувач уперше вводить текст, помилку не показуємо — лише зелену рамку, коли значення вже правильне;
+      // після виходу з поля (blur) або спроби надіслати форму поле перевіряється на кожне введення.
+      const touched = new Set();
+      Object.keys(fields).forEach((name) => {
+        const field = fields[name];
+        if (field.type === 'checkbox' || field.tagName === 'SELECT') {
+          field.addEventListener('change', () => {
+            touched.add(name);
+            check(name);
+          });
+          return;
+        }
+        field.addEventListener('input', () => {
+          if (touched.has(name)) check(name);
+          else if (!rules[name](valueOf(name), field)) setState(field, '');
+        });
+        field.addEventListener('blur', () => {
+          if (name === 'contact' && field.value.trim()) field.value = normalizeContact(field.value);
+          if (name === 'name') field.value = field.value.trim().replace(/\s+/g, ' ');
+          if (touched.has(name) || field.value) {
+            touched.add(name);
+            check(name);
+          }
+        });
+      });
+
       form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        if (!form.reportValidity()) return;
+        event.preventDefault(); // без цього браузер одразу перейшов би на сторінку підтвердження
+        fields.contact.value = normalizeContact(fields.contact.value);
+        fields.name.value = fields.name.value.trim().replace(/\s+/g, ' ');
+        const results = Object.keys(fields).map((name) => {
+          touched.add(name);
+          return [name, check(name)];
+        });
+        const firstInvalid = results.find(([, ok]) => !ok);
+        if (firstInvalid) {
+          fields[firstInvalid[0]].focus(); // фокус на перше поле з помилкою — користувач одразу бачить, що виправити
+          return;
+        }
         window.location.href = `tournament-confirmed.html?id=${t.id}`;
       });
     },
