@@ -7,6 +7,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./*.html', './js/**/*.js'],
+  // Темна тема: утиліти dark: (напр. dark:hidden, dark:bg-[#050b17]) спрацьовують, коли на <html> стоїть data-theme="dark".
+  // Атрибут ставить js/theme-init.js ще до показу сторінки (вибір з localStorage або тема системи), а перемикач — js/theme.js.
+  darkMode: ['selector', '[data-theme="dark"]'],
   theme: {
     extend: {
       // Кольори беруться з CSS-змінних (css/custom-styles.css), тому один клас,

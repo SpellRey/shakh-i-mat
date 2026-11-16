@@ -47,10 +47,11 @@
   <link rel="stylesheet" href="css/tailwind.css">
 
   <!-- defer: скрипти виконуються після побудови DOM і не блокують рендеринг -->
-  <script src="js/data.js" defer></script>
   <script src="js/menu.js" defer></script>
   <script src="js/theme.js" defer></script>
   <script src="js/pages.js" defer></script>
+  <!-- Вебаналітика Vercel: скрипт підключається лише на домені *.vercel.app (на Netlify, GitHub Pages і локально його немає) -->
+  <script src="js/analytics.js" defer></script>
 </head>
 <body data-page="match-confirmed" class="page-inner bg-night-deep font-sans text-base leading-normal text-ink antialiased">
   <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-[100] focus:rounded-lg focus:bg-secondary focus:px-4 focus:py-2 focus:text-night">Перейти до основного вмісту</a>
@@ -59,16 +60,17 @@
   <header class="sticky top-0 z-50 border-b border-line bg-night/90 backdrop-blur-md">
     <div class="mx-auto flex w-full max-w-container flex-wrap items-center justify-between gap-x-4 px-4 py-2 sm:px-8 lg:flex-nowrap">
       <a href="index.html" class="shrink-0 rounded-lg transition hover:drop-shadow-[0_0_12px_rgb(255_46_99/0.6)]">
-        <!-- два варіанти логотипа: у світлій темі «дірка» в букві «а» світла (CSS показує потрібний) -->
-        <img src="assets/images/logo.svg" alt="Шах і Мат — на головну" width="176" height="173" class="logo-dark h-14 w-auto lg:h-[72px]">
-        <img src="assets/images/logo-light.svg" alt="Шах і Мат — на головну" width="176" height="173" class="logo-light h-14 w-auto lg:h-[72px]">
+        <!-- два варіанти логотипа: у світлій темі «дірка» в букві «а» світла; потрібний показують утиліти Tailwind dark:
+             (dark: спрацьовує, коли на <html> стоїть data-theme="dark" — див. darkMode у tailwind.config.js) -->
+        <img src="assets/images/logo.svg" alt="Шах і Мат — на головну" width="176" height="173" class="logo-dark hidden h-14 w-auto dark:inline lg:h-[72px]">
+        <img src="assets/images/logo-light.svg" alt="Шах і Мат — на головну" width="176" height="173" class="logo-light h-14 w-auto dark:hidden lg:h-[72px]">
       </a>
 
       <!-- Перемикач теми + «бургер» (до 1024px) -->
       <div class="flex items-center gap-2 lg:order-last lg:ml-4">
         <button id="theme-toggle" type="button" class="grid h-11 w-11 place-items-center rounded-full border border-line text-lg transition duration-200 hover:border-secondary hover:text-secondary hover:shadow-neon-cyan-sm" aria-label="Увімкнути світлу тему" aria-pressed="false">
-          <i class="fa-solid fa-sun theme-icon-sun" aria-hidden="true"></i>
-          <i class="fa-solid fa-moon theme-icon-moon" aria-hidden="true"></i>
+          <i class="fa-solid fa-sun theme-icon-sun hidden dark:inline-block" aria-hidden="true"></i>
+          <i class="fa-solid fa-moon theme-icon-moon dark:hidden" aria-hidden="true"></i>
         </button>
         <button id="menu-toggle" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-line text-xl transition hover:border-secondary hover:text-secondary lg:hidden" aria-controls="site-menu" aria-expanded="false" aria-label="Відкрити меню">
           <i class="fa-solid fa-bars" aria-hidden="true"></i>

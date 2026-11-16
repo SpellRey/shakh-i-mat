@@ -107,13 +107,9 @@ html.theme-switching *::after {
   transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease !important;
 }
 
-/* ---------- Іконка перемикача теми (сонце / місяць) і логотип для кожної теми ---------- */
-html[data-theme="dark"] .theme-icon-moon,
-html[data-theme="light"] .theme-icon-sun,
-html[data-theme="dark"] .logo-light,
-html[data-theme="light"] .logo-dark {
-  display: none;
-}
+/* ---------- Іконка перемикача теми (сонце / місяць) і логотип для кожної теми ----------
+   Самостійна робота: перенесено в утиліти Tailwind dark: просто в розмітці
+   (hidden dark:inline-block, dark:hidden) — див. darkMode у tailwind.config.js. */
 
 /* ---------- Єдиний помітний фокус для клавіатури ---------- */
 :focus-visible {
@@ -160,7 +156,7 @@ html[data-theme="light"] .logo-dark {
 /* Hero під тему: два відео лежать одне на одному, видно лише відео поточної теми.
    У світлій темі тло hero — колір фону світлого відео (#edf3f4), щоб лівий край, що плавно зникає, не мав межі. */
 html[data-theme="light"] .hero-section {
-  background-color: #edf3f4;
+  /* колір тла hero для кожної теми задано утилітами в розмітці: bg-[#edf3f4] dark:bg-[#050b17] */
   /* бірюзовий трохи темніший, ніж на решті сторінки: тло світлого відео сіро-блакитне (до #c8d4da),
      і текст кнопки «Орендувати гру» та бейджа має тримати контраст ≥ 4,5 : 1 (WCAG AA) */
   --c-secondary: 0 92 108;
