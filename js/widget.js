@@ -206,6 +206,13 @@
     document.querySelectorAll('[data-rent-calc]').forEach(initRentCalculator);
   }
 
+  // Самостійна робота: у Node.js (автотести tests/*.test.mjs, GitHub Actions) DOM немає —
+  // віддаємо чисті функції розрахунку для перевірки й не ініціалізуємо віджет. У браузері цей блок не виконується.
+  if (typeof document === 'undefined') {
+    if (typeof module !== 'undefined') module.exports = { RULES, calculateRent, parseDays };
+    return;
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAll);
   } else {

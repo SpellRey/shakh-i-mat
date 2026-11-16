@@ -1,5 +1,5 @@
-# CI/CD для сайту «Шах і Мат» (ЛР 12).
-# Кожен push у main: 1) CI — перевірка коду й збирання Tailwind CSS; 2) CD — деплой на Vercel у production.
+# CI/CD для сайту «Шах і Мат» (ЛР 12, доповнено в самостійній роботі).
+# Кожен push у main: 1) CI — перевірка коду, автотести (npm test) і збирання Tailwind CSS; 2) CD — деплой на Vercel у production.
 # Секрети (GitHub → Settings → Secrets and variables → Actions):
 #   VERCEL_TOKEN      — токен з Vercel → Account Settings → Tokens
 #   VERCEL_ORG_ID     — ID команди/акаунта Vercel (Team Settings → General → Team ID)
@@ -24,12 +24,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Отримати код репозиторію
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Встановити Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Синтаксис JavaScript
         run: for f in js/*.js; do node --check "$f"; done
@@ -40,9 +40,15 @@ jobs:
             echo "::error::Знайдено Tailwind CDN — стилі мають підключатися з css/tailwind.css"; exit 1
           fi
 
+      - name: Встановити залежності
+        run: npm install --no-audit --no-fund
+
+      # Автотести (tests/*.test.mjs): структура data/data.json і логіка калькулятора оренди (Happy Path + Edge Cases)
+      - name: Автотести (npm test)
+        run: npm test
+
       - name: Зібрати Tailwind CSS
         run: |
-          npm install --no-audit --no-fund
           npm run build:css
           test -s css/tailwind.css
 
@@ -56,12 +62,12 @@ jobs:
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     steps:
       - name: Отримати код репозиторію
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Встановити Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Зібрати Tailwind CSS
         run: |
