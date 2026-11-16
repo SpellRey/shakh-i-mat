@@ -1,10 +1,26 @@
 // Логіка сторінок «Шах і Мат».
 // Кожна сторінка має атрибут <body data-page="...">, за яким запускається свій модуль.
-// Дані (ігри, гравці, турніри) — у js/data.js. Значення з адреси (?id=...) вставляються
-// лише через textContent, щоб не можна було підкинути HTML-код.
+// Дані (ігри, власники, гравці, турніри) — у data/data.json; вони завантажуються асинхронно (fetch + async/await).
+// Значення з адреси (?id=...) і з JSON вставляються лише через textContent, щоб не можна було підкинути HTML-код.
 
 (function () {
-  const DATA = window.SHM_DATA;
+  // ---------- Завантаження даних (самостійна робота) ----------
+  // fetch повертає Promise: сторінка вже показана й не «зависає», поки йде запит, а дані підставляються, щойно прийдуть.
+  // Сторінки, яким дані не потрібні (головна, контакти, вхід), запит не роблять.
+  const DATA_URL = 'data/data.json';
+  let DATA = null;
+
+  async function loadData() {
+    const response = await fetch(DATA_URL);
+    if (!response.ok) throw new Error(`HTTP ${response.status} під час завантаження ${DATA_URL}`);
+    const data = await response.json(); // некоректний JSON → SyntaxError, його ловить start()
+    // мінімальна перевірка структури: без цих масивів сторінки не мають що показувати
+    ['games', 'owners', 'players', 'tournaments'].forEach((key) => {
+      if (!Array.isArray(data[key]) || data[key].length === 0) throw new Error(`у ${DATA_URL} немає списку «${key}»`);
+    });
+    return data;
+  }
+
   const params = new URLSearchParams(window.location.search);
   const page = document.body.dataset.page;
 
@@ -122,6 +138,35 @@
     catalog() {
       const form = document.getElementById('filters');
       const grid = document.getElementById('games-grid');
+
+      // ---------- Рендеринг карток з data.json (DOM) ----------
+      // Клонуємо <template id="game-card-template"> і заповнюємо поля: текст — textContent, адреси — setAttribute.
+      // Дані для фільтрів записуються в data-атрибути <li>, тож фільтрація далі працює з DOM без нових запитів.
+      const template = document.getElementById('game-card-template');
+      const fragment = document.createDocumentFragment(); // усі картки додаються в DOM за один раз — одне перемальовування
+      [...DATA.games].sort((a, b) => b.rating - a.rating).forEach((g) => {
+        const item = template.content.firstElementChild.cloneNode(true);
+        Object.assign(item.dataset, { name: g.name, genre: g.genre, pmin: g.pmin, pmax: g.pmax, price: g.price, rating: g.rating });
+        const img = item.querySelector('[data-slot="img"]');
+        img.src = g.img;
+        if (g.srcset) {
+          img.srcset = g.srcset;
+          img.sizes = '(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw';
+        }
+        img.alt = g.alt;
+        img.width = g.w;
+        img.height = g.h;
+        img.title = `Фото: ${g.author}, ${g.license}`;
+        item.querySelector('[data-slot="meta"]').textContent = `${g.genre} · ${g.players} гравців`;
+        const link = item.querySelector('[data-slot="link"]');
+        link.textContent = g.name;
+        link.href = `game.html?id=${encodeURIComponent(g.id)}`;
+        item.querySelector('[data-slot="price"]').textContent = `${g.price} ₴/день`;
+        fragment.appendChild(item);
+      });
+      grid.replaceChildren(fragment); // прибирає заглушки-«скелетони» і вставляє картки
+      grid.setAttribute('aria-busy', 'false');
+
       const cards = Array.from(grid.children);
       const count = document.getElementById('games-count');
       const empty = document.getElementById('games-empty');
@@ -582,5 +627,43 @@
     });
   }
 
-  if (modules[page]) modules[page]();
+  // Сторінки, які показують дані з data.json
+  const NEEDS_DATA = new Set(['catalog', 'game', 'booking', 'rent-confirmed', 'rent-unavailable', 'tournament',
+    'tournament-register', 'tournament-confirmed', 'tournament-full', 'match-invite', 'match-confirmed']);
+
+  // Повідомлення, якщо data.json не завантажився (немає мережі, файл пошкоджено, сайт відкрито як file://)
+  function showDataError() {
+    const text = 'Не вдалося завантажити дані про ігри й турніри. Перевірте з’єднання з інтернетом і оновіть сторінку.';
+    let box = document.getElementById('data-error');
+    if (!box) {
+      box = document.createElement('p');
+      box.id = 'data-error';
+      box.setAttribute('role', 'alert');
+      box.className = 'mb-6 rounded-2xl border border-danger/50 bg-danger/10 p-4 text-center font-semibold text-danger';
+      const main = document.getElementById('main');
+      if (main) main.prepend(box);
+    }
+    box.textContent = text;
+    box.hidden = false;
+    // заглушки каталогу більше не потрібні
+    document.querySelectorAll('[data-skeleton]').forEach((node) => node.remove());
+    const grid = document.getElementById('games-grid');
+    if (grid) grid.setAttribute('aria-busy', 'false');
+  }
+
+  async function start() {
+    if (!modules[page]) return;
+    if (NEEDS_DATA.has(page)) {
+      try {
+        DATA = await loadData();
+      } catch (error) {
+        console.error('[data.json]', error.message);
+        showDataError();
+        return;
+      }
+    }
+    modules[page]();
+  }
+
+  start();
 })();

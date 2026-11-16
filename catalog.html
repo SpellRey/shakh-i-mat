@@ -46,10 +46,11 @@
   <link rel="stylesheet" href="css/tailwind.css">
 
   <!-- defer: скрипти виконуються після побудови DOM і не блокують рендеринг -->
-  <script src="js/data.js" defer></script>
   <script src="js/menu.js" defer></script>
   <script src="js/theme.js" defer></script>
   <script src="js/pages.js" defer></script>
+  <!-- Вебаналітика Vercel: скрипт підключається лише на домені *.vercel.app (на Netlify, GitHub Pages і локально його немає) -->
+  <script src="js/analytics.js" defer></script>
 </head>
 <body data-page="catalog" class="page-inner bg-night-deep font-sans text-base leading-normal text-ink antialiased">
   <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-[100] focus:rounded-lg focus:bg-secondary focus:px-4 focus:py-2 focus:text-night">Перейти до основного вмісту</a>
@@ -58,16 +59,17 @@
   <header class="sticky top-0 z-50 border-b border-line bg-night/90 backdrop-blur-md">
     <div class="mx-auto flex w-full max-w-container flex-wrap items-center justify-between gap-x-4 px-4 py-2 sm:px-8 lg:flex-nowrap">
       <a href="index.html" class="shrink-0 rounded-lg transition hover:drop-shadow-[0_0_12px_rgb(255_46_99/0.6)]">
-        <!-- два варіанти логотипа: у світлій темі «дірка» в букві «а» світла (CSS показує потрібний) -->
-        <img src="assets/images/logo.svg" alt="Шах і Мат — на головну" width="176" height="173" class="logo-dark h-14 w-auto lg:h-[72px]">
-        <img src="assets/images/logo-light.svg" alt="Шах і Мат — на головну" width="176" height="173" class="logo-light h-14 w-auto lg:h-[72px]">
+        <!-- два варіанти логотипа: у світлій темі «дірка» в букві «а» світла; потрібний показують утиліти Tailwind dark:
+             (dark: спрацьовує, коли на <html> стоїть data-theme="dark" — див. darkMode у tailwind.config.js) -->
+        <img src="assets/images/logo.svg" alt="Шах і Мат — на головну" width="176" height="173" class="logo-dark hidden h-14 w-auto dark:inline lg:h-[72px]">
+        <img src="assets/images/logo-light.svg" alt="Шах і Мат — на головну" width="176" height="173" class="logo-light h-14 w-auto dark:hidden lg:h-[72px]">
       </a>
 
       <!-- Перемикач теми + «бургер» (до 1024px) -->
       <div class="flex items-center gap-2 lg:order-last lg:ml-4">
         <button id="theme-toggle" type="button" class="grid h-11 w-11 place-items-center rounded-full border border-line text-lg transition duration-200 hover:border-secondary hover:text-secondary hover:shadow-neon-cyan-sm" aria-label="Увімкнути світлу тему" aria-pressed="false">
-          <i class="fa-solid fa-sun theme-icon-sun" aria-hidden="true"></i>
-          <i class="fa-solid fa-moon theme-icon-moon" aria-hidden="true"></i>
+          <i class="fa-solid fa-sun theme-icon-sun hidden dark:inline-block" aria-hidden="true"></i>
+          <i class="fa-solid fa-moon theme-icon-moon dark:hidden" aria-hidden="true"></i>
         </button>
         <button id="menu-toggle" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-line text-xl transition hover:border-secondary hover:text-secondary lg:hidden" aria-controls="site-menu" aria-expanded="false" aria-label="Відкрити меню">
           <i class="fa-solid fa-bars" aria-hidden="true"></i>
@@ -159,125 +161,77 @@
           </div>
         </div>
 
-        <ul id="games-grid" class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
-          <li data-name="Шахи" data-genre="Стратегія" data-pmin="2" data-pmax="2" data-price="50" data-rating="4.8">
-            <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-              <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/500px-Chess_game_Staunton_No._6.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/500px-Chess_game_Staunton_No._6.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/960px-Chess_game_Staunton_No._6.jpg 960w" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" alt="Дерев’яні шахові фігури Стаунтона на дошці в початковій позиції" width="500" height="307" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: Wilfredor, CC0, Wikimedia Commons">
-              </div>
-              <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Стратегія · 2 гравців</p>
-              <h2 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
-                <a href="game.html?id=chess" class="after:absolute after:inset-0 after:rounded-2xl">Шахи</a>
-              </h2>
-              <p class="text-lg font-medium text-muted">50 ₴/день</p>
-              <span class="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-primary px-6 py-2.5 font-semibold text-ink transition duration-200 hover:bg-primary-strong hover:text-white hover:shadow-glow active:translate-y-px motion-reduce:transition-none mt-auto group-hover:bg-primary-strong group-hover:text-white group-hover:shadow-glow" aria-hidden="true">Орендувати</span>
-            </article>
+        <!-- Сітка заповнюється з data/data.json (js/pages.js → catalog): поки дані вантажаться, видно заглушки-«скелетони»;
+             aria-busy повідомляє скрінрідеру, що вміст ще завантажується -->
+        <ul id="games-grid" class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3" aria-busy="true">
+          <li aria-hidden="true" data-skeleton>
+            <div class="flex h-full animate-pulse flex-col gap-3 rounded-2xl border border-line bg-surface p-4">
+              <div class="aspect-[4/3] rounded-xl bg-night-soft"></div>
+              <div class="h-3 w-1/2 rounded bg-night-soft"></div>
+              <div class="h-6 w-2/3 rounded bg-night-soft"></div>
+              <div class="h-4 w-1/3 rounded bg-night-soft"></div>
+            </div>
           </li>
-          <li data-name="Діксіт" data-genre="Партійна" data-pmin="3" data-pmax="8" data-price="70" data-rating="4.8">
-            <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-              <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/500px-Dixit_game_0001.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/500px-Dixit_game_0001.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/960px-Dixit_game_0001.jpg 960w" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" alt="Гравці викладають ілюстровані картки «Діксіт» біля коробки-поля для підрахунку очок" width="500" height="333" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: yoppy, CC BY 2.0, Wikimedia Commons">
-              </div>
-              <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Партійна · 3–8 гравців</p>
-              <h2 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
-                <a href="game.html?id=dixit" class="after:absolute after:inset-0 after:rounded-2xl">Діксіт</a>
-              </h2>
-              <p class="text-lg font-medium text-muted">70 ₴/день</p>
-              <span class="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-primary px-6 py-2.5 font-semibold text-ink transition duration-200 hover:bg-primary-strong hover:text-white hover:shadow-glow active:translate-y-px motion-reduce:transition-none mt-auto group-hover:bg-primary-strong group-hover:text-white group-hover:shadow-glow" aria-hidden="true">Орендувати</span>
-            </article>
+          <li aria-hidden="true" data-skeleton>
+            <div class="flex h-full animate-pulse flex-col gap-3 rounded-2xl border border-line bg-surface p-4">
+              <div class="aspect-[4/3] rounded-xl bg-night-soft"></div>
+              <div class="h-3 w-1/2 rounded bg-night-soft"></div>
+              <div class="h-6 w-2/3 rounded bg-night-soft"></div>
+              <div class="h-4 w-1/3 rounded bg-night-soft"></div>
+            </div>
           </li>
-          <li data-name="Каркассон" data-genre="Стратегія" data-pmin="2" data-pmax="5" data-price="100" data-rating="4.7">
-            <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-              <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/500px-Carcassonne_in_Kaisla.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/500px-Carcassonne_in_Kaisla.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/960px-Carcassonne_in_Kaisla.jpg 960w" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" alt="Партія в «Каркассон»: розкладені тайли з містами й дорогами та фішки гравців" width="500" height="375" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: JIP, CC BY-SA 4.0, Wikimedia Commons">
-              </div>
-              <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Стратегія · 2–5 гравців</p>
-              <h2 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
-                <a href="game.html?id=carcassonne" class="after:absolute after:inset-0 after:rounded-2xl">Каркассон</a>
-              </h2>
-              <p class="text-lg font-medium text-muted">100 ₴/день</p>
-              <span class="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-primary px-6 py-2.5 font-semibold text-ink transition duration-200 hover:bg-primary-strong hover:text-white hover:shadow-glow active:translate-y-px motion-reduce:transition-none mt-auto group-hover:bg-primary-strong group-hover:text-white group-hover:shadow-glow" aria-hidden="true">Орендувати</span>
-            </article>
+          <li aria-hidden="true" data-skeleton>
+            <div class="flex h-full animate-pulse flex-col gap-3 rounded-2xl border border-line bg-surface p-4">
+              <div class="aspect-[4/3] rounded-xl bg-night-soft"></div>
+              <div class="h-3 w-1/2 rounded bg-night-soft"></div>
+              <div class="h-6 w-2/3 rounded bg-night-soft"></div>
+              <div class="h-4 w-1/3 rounded bg-night-soft"></div>
+            </div>
           </li>
-          <li data-name="Катан" data-genre="Економіка" data-pmin="3" data-pmax="4" data-price="60" data-rating="4.7">
-            <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-              <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/500px-Settlers_of_Catan_completed.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/500px-Settlers_of_Catan_completed.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/960px-Settlers_of_Catan_completed.jpg 960w" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" alt="Завершена партія «Катану»: острів з гексів, дороги й поселення гравців" width="500" height="315" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: Fritzmann2002, CC BY-SA 4.0, Wikimedia Commons">
-              </div>
-              <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Економіка · 3–4 гравців</p>
-              <h2 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
-                <a href="game.html?id=catan" class="after:absolute after:inset-0 after:rounded-2xl">Катан</a>
-              </h2>
-              <p class="text-lg font-medium text-muted">60 ₴/день</p>
-              <span class="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-primary px-6 py-2.5 font-semibold text-ink transition duration-200 hover:bg-primary-strong hover:text-white hover:shadow-glow active:translate-y-px motion-reduce:transition-none mt-auto group-hover:bg-primary-strong group-hover:text-white group-hover:shadow-glow" aria-hidden="true">Орендувати</span>
-            </article>
+          <li aria-hidden="true" data-skeleton>
+            <div class="flex h-full animate-pulse flex-col gap-3 rounded-2xl border border-line bg-surface p-4">
+              <div class="aspect-[4/3] rounded-xl bg-night-soft"></div>
+              <div class="h-3 w-1/2 rounded bg-night-soft"></div>
+              <div class="h-6 w-2/3 rounded bg-night-soft"></div>
+              <div class="h-4 w-1/3 rounded bg-night-soft"></div>
+            </div>
           </li>
-          <li data-name="Коднеймс" data-genre="Партійна" data-pmin="4" data-pmax="8" data-price="75" data-rating="4.7">
-            <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-              <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/500px-Codenames_board_game.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/500px-Codenames_board_game.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/960px-Codenames_board_game.jpg 960w" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" alt="Розкладені картки агентів у грі «Коднеймс»" width="500" height="375" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: JIP, CC BY-SA 3.0, Wikimedia Commons">
-              </div>
-              <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Партійна · 4–8 гравців</p>
-              <h2 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
-                <a href="game.html?id=codenames" class="after:absolute after:inset-0 after:rounded-2xl">Коднеймс</a>
-              </h2>
-              <p class="text-lg font-medium text-muted">75 ₴/день</p>
-              <span class="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-primary px-6 py-2.5 font-semibold text-ink transition duration-200 hover:bg-primary-strong hover:text-white hover:shadow-glow active:translate-y-px motion-reduce:transition-none mt-auto group-hover:bg-primary-strong group-hover:text-white group-hover:shadow-glow" aria-hidden="true">Орендувати</span>
-            </article>
+          <li aria-hidden="true" data-skeleton>
+            <div class="flex h-full animate-pulse flex-col gap-3 rounded-2xl border border-line bg-surface p-4">
+              <div class="aspect-[4/3] rounded-xl bg-night-soft"></div>
+              <div class="h-3 w-1/2 rounded bg-night-soft"></div>
+              <div class="h-6 w-2/3 rounded bg-night-soft"></div>
+              <div class="h-4 w-1/3 rounded bg-night-soft"></div>
+            </div>
           </li>
-          <li data-name="Пандемія" data-genre="Кооператив" data-pmin="2" data-pmax="4" data-price="80" data-rating="4.6">
-            <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-              <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/500px-Pandemic_board_game.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/500px-Pandemic_board_game.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/960px-Pandemic_board_game.jpg 960w" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" alt="Ігрове поле «Пандемії» з мапою світу та кубиками хвороб" width="500" height="375" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: Padaguan, CC BY-SA 4.0, Wikimedia Commons">
-              </div>
-              <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Кооператив · 2–4 гравців</p>
-              <h2 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
-                <a href="game.html?id=pandemic" class="after:absolute after:inset-0 after:rounded-2xl">Пандемія</a>
-              </h2>
-              <p class="text-lg font-medium text-muted">80 ₴/день</p>
-              <span class="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-primary px-6 py-2.5 font-semibold text-ink transition duration-200 hover:bg-primary-strong hover:text-white hover:shadow-glow active:translate-y-px motion-reduce:transition-none mt-auto group-hover:bg-primary-strong group-hover:text-white group-hover:shadow-glow" aria-hidden="true">Орендувати</span>
-            </article>
-          </li>
-          <li data-name="Доббл" data-genre="Партійна" data-pmin="2" data-pmax="8" data-price="80" data-rating="4.4">
-            <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-              <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Dobble_jeu.jpg" alt="Круглі картки «Доббл» з кольоровими символами на столі" width="750" height="513" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: zizou man, CC BY 2.0, Wikimedia Commons">
-              </div>
-              <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Партійна · 2–8 гравців</p>
-              <h2 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
-                <a href="game.html?id=dobble" class="after:absolute after:inset-0 after:rounded-2xl">Доббл</a>
-              </h2>
-              <p class="text-lg font-medium text-muted">80 ₴/день</p>
-              <span class="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-primary px-6 py-2.5 font-semibold text-ink transition duration-200 hover:bg-primary-strong hover:text-white hover:shadow-glow active:translate-y-px motion-reduce:transition-none mt-auto group-hover:bg-primary-strong group-hover:text-white group-hover:shadow-glow" aria-hidden="true">Орендувати</span>
-            </article>
-          </li>
-          <li data-name="Табу" data-genre="Партійна" data-pmin="4" data-pmax="10" data-price="100" data-rating="4.3">
-            <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-              <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Taboo_02.jpg" alt="Коробка, ігрове поле, пісковий годинник і картки гри «Табу»" width="405" height="336" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: FH (французька Вікіпедія), CC BY-SA 1.0, Wikimedia Commons">
-              </div>
-              <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Партійна · 4–10 гравців</p>
-              <h2 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
-                <a href="game.html?id=taboo" class="after:absolute after:inset-0 after:rounded-2xl">Табу</a>
-              </h2>
-              <p class="text-lg font-medium text-muted">100 ₴/день</p>
-              <span class="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-primary px-6 py-2.5 font-semibold text-ink transition duration-200 hover:bg-primary-strong hover:text-white hover:shadow-glow active:translate-y-px motion-reduce:transition-none mt-auto group-hover:bg-primary-strong group-hover:text-white group-hover:shadow-glow" aria-hidden="true">Орендувати</span>
-            </article>
-          </li>
-          <li data-name="Монополія" data-genre="Економіка" data-pmin="2" data-pmax="6" data-price="90" data-rating="4.1">
-            <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-              <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/500px-Monopoly_board_game.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/500px-Monopoly_board_game.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/960px-Monopoly_board_game.jpg 960w" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" alt="Поле «Монополії» з картками власності та паперовими грошима під час партії" width="500" height="375" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" title="Фото: Yahya, CC BY-SA 4.0, Wikimedia Commons">
-              </div>
-              <p class="text-xs font-semibold uppercase tracking-wider text-secondary">Економіка · 2–6 гравців</p>
-              <h2 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
-                <a href="game.html?id=monopoly" class="after:absolute after:inset-0 after:rounded-2xl">Монополія</a>
-              </h2>
-              <p class="text-lg font-medium text-muted">90 ₴/день</p>
-              <span class="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-primary px-6 py-2.5 font-semibold text-ink transition duration-200 hover:bg-primary-strong hover:text-white hover:shadow-glow active:translate-y-px motion-reduce:transition-none mt-auto group-hover:bg-primary-strong group-hover:text-white group-hover:shadow-glow" aria-hidden="true">Орендувати</span>
-            </article>
+          <li aria-hidden="true" data-skeleton>
+            <div class="flex h-full animate-pulse flex-col gap-3 rounded-2xl border border-line bg-surface p-4">
+              <div class="aspect-[4/3] rounded-xl bg-night-soft"></div>
+              <div class="h-3 w-1/2 rounded bg-night-soft"></div>
+              <div class="h-6 w-2/3 rounded bg-night-soft"></div>
+              <div class="h-4 w-1/3 rounded bg-night-soft"></div>
+            </div>
           </li>
         </ul>
+        <noscript><p class="rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8">Каталог завантажується за допомогою JavaScript. Увімкніть його в браузері, щоб побачити ігри.</p></noscript>
+        <p id="data-error" class="rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8 text-center" role="alert" hidden></p>
+
+        <!-- Шаблон картки гри: JS клонує його й заповнює поля data-slot через textContent і атрибути (без innerHTML) -->
+        <template id="game-card-template">
+          <li>
+            <article class="group relative flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-neon-cyan motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+              <div class="mb-3 aspect-[4/3] overflow-hidden rounded-xl bg-night">
+                <img data-slot="img" alt="" width="500" height="375" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100">
+              </div>
+              <p class="text-xs font-semibold uppercase tracking-wider text-secondary" data-slot="meta"></p>
+              <h2 class="text-2xl font-semibold transition duration-300 group-hover:text-secondary">
+                <a href="game.html" class="after:absolute after:inset-0 after:rounded-2xl" data-slot="link"></a>
+              </h2>
+              <p class="text-lg font-medium text-muted" data-slot="price"></p>
+              <span class="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-primary px-6 py-2.5 font-semibold text-ink transition duration-200 hover:bg-primary-strong hover:text-white hover:shadow-glow active:translate-y-px motion-reduce:transition-none mt-auto group-hover:bg-primary-strong group-hover:text-white group-hover:shadow-glow" aria-hidden="true">Орендувати</span>
+            </article>
+          </li>
+        </template>
 
         <div id="games-empty" class="rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8 text-center" hidden>
           <p class="text-xl font-semibold">Нічого не знайдено</p>

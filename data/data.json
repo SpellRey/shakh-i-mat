@@ -1,7 +1,4 @@
-// Дані сайту: ігри, власники, гравці, турніри.
-// Фото ігор — з Wikimedia Commons (автор і ліцензія — у полях author/license, список на credits.html).
-// Профілі, ціни та турніри — приклади для демонстрації структури сайту (бекенду немає).
-window.SHM_DATA = {
+{
   "games": [
     {
       "id": "chess",
@@ -16,6 +13,7 @@ window.SHM_DATA = {
       "copies": 3,
       "desc": "Класична стратегічна гра для двох гравців. Підходить для вечірніх партій у гуртожитку: правила знають усі, а партія займає від пів години.",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/500px-Chess_game_Staunton_No._6.jpg",
+      "srcset": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/500px-Chess_game_Staunton_No._6.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/960px-Chess_game_Staunton_No._6.jpg 960w",
       "w": 500,
       "h": 307,
       "alt": "Дерев’яні шахові фігури Стаунтона на дошці в початковій позиції",
@@ -36,6 +34,7 @@ window.SHM_DATA = {
       "copies": 2,
       "desc": "Будуйте середньовічні міста, дороги й монастирі з квадратних тайлів. Пояснити правила можна за п’ять хвилин, а кожна партія інша.",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/500px-Carcassonne_in_Kaisla.jpg",
+      "srcset": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/500px-Carcassonne_in_Kaisla.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/960px-Carcassonne_in_Kaisla.jpg 960w",
       "w": 500,
       "h": 375,
       "alt": "Партія в «Каркассон»: розкладені тайли з містами й дорогами та фішки гравців",
@@ -56,6 +55,7 @@ window.SHM_DATA = {
       "copies": 1,
       "desc": "Кооперативна гра: команда лікарів рятує світ від чотирьох епідемій. Ви або перемагаєте разом, або разом програєте.",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/500px-Pandemic_board_game.jpg",
+      "srcset": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/500px-Pandemic_board_game.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/960px-Pandemic_board_game.jpg 960w",
       "w": 500,
       "h": 375,
       "alt": "Ігрове поле «Пандемії» з мапою світу та кубиками хвороб",
@@ -76,6 +76,7 @@ window.SHM_DATA = {
       "copies": 2,
       "desc": "Поясни слово своїй команді, не називаючи заборонених слів з картки. Найкраще працює у великій компанії на кухні поверху.",
       "img": "https://upload.wikimedia.org/wikipedia/commons/1/19/Taboo_02.jpg",
+      "srcset": "",
       "w": 405,
       "h": 336,
       "alt": "Коробка, ігрове поле, пісковий годинник і картки гри «Табу»",
@@ -96,6 +97,7 @@ window.SHM_DATA = {
       "copies": 2,
       "desc": "Економічна класика: купуй вулиці, будуй будинки й збирай оренду із суперників. Для довгого вечора у вихідні.",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/500px-Monopoly_board_game.jpg",
+      "srcset": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/500px-Monopoly_board_game.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/960px-Monopoly_board_game.jpg 960w",
       "w": 500,
       "h": 375,
       "alt": "Поле «Монополії» з картками власності та паперовими грошима під час партії",
@@ -116,6 +118,7 @@ window.SHM_DATA = {
       "copies": 1,
       "desc": "Гра на асоціації з казковими ілюстраціями. Ведучий загадує картку, решта намагаються вгадати її серед схожих.",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/500px-Dixit_game_0001.jpg",
+      "srcset": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/500px-Dixit_game_0001.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/960px-Dixit_game_0001.jpg 960w",
       "w": 500,
       "h": 333,
       "alt": "Гравці викладають ілюстровані картки «Діксіт» біля коробки-поля для підрахунку очок",
@@ -136,6 +139,7 @@ window.SHM_DATA = {
       "copies": 2,
       "desc": "Засновуйте поселення на острові з шестикутних гексів, торгуйте ресурсами з сусідами й будуйте найдовшу дорогу.",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/500px-Settlers_of_Catan_completed.jpg",
+      "srcset": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/500px-Settlers_of_Catan_completed.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/960px-Settlers_of_Catan_completed.jpg 960w",
       "w": 500,
       "h": 315,
       "alt": "Завершена партія «Катану»: острів з гексів, дороги й поселення гравців",
@@ -156,6 +160,7 @@ window.SHM_DATA = {
       "copies": 3,
       "desc": "Швидка гра на реакцію: на будь-яких двох картках є рівно один однаковий символ. Хто перший його знайде — забирає картку.",
       "img": "https://upload.wikimedia.org/wikipedia/commons/8/84/Dobble_jeu.jpg",
+      "srcset": "",
       "w": 750,
       "h": 513,
       "alt": "Круглі картки «Доббл» з кольоровими символами на столі",
@@ -176,6 +181,7 @@ window.SHM_DATA = {
       "copies": 2,
       "desc": "Дві команди шпигунів: капітан дає підказку одним словом, а команда шукає своїх агентів серед 25 карток зі словами.",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/500px-Codenames_board_game.jpg",
+      "srcset": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/500px-Codenames_board_game.jpg 500w, https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/960px-Codenames_board_game.jpg 960w",
       "w": 500,
       "h": 375,
       "alt": "Розкладені картки агентів у грі «Коднеймс»",
@@ -340,4 +346,4 @@ window.SHM_DATA = {
       "desc": "Команди по чотири гравці грають на складності «Героїчна». Перемагає команда, що вилікує всі хвороби за найменше ходів."
     }
   ]
-};
+}
