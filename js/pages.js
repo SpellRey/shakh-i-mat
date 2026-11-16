@@ -652,6 +652,8 @@
     document.querySelectorAll('[data-skeleton]').forEach((node) => node.remove());
     const grid = document.getElementById('games-grid');
     if (grid) grid.setAttribute('aria-busy', 'false');
+    const count = document.getElementById('games-count');
+    if (count) count.textContent = 'Дані недоступні';
   }
 
   async function start() {
