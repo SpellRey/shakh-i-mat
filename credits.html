@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Джерела фото та медіа | Шах і Мат</title>
-  <meta name="description" content="Автори й ліцензії фотографій ігор та вбудованих медіа на сайті «Шах і Мат».">
+  <title>Джерела зображень та медіа | Шах і Мат</title>
+  <meta name="description" content="Промпти ШІ-зображень ігор і джерела вбудованих медіа на сайті «Шах і Мат».">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="uk_UA">
   <meta property="og:site_name" content="Шах і Мат">
-  <meta property="og:title" content="Джерела фото та медіа | Шах і Мат">
-  <meta property="og:description" content="Автори й ліцензії фотографій ігор та вбудованих медіа на сайті «Шах і Мат».">
+  <meta property="og:title" content="Джерела зображень та медіа | Шах і Мат">
+  <meta property="og:description" content="Промпти ШІ-зображень ігор і джерела вбудованих медіа на сайті «Шах і Мат».">
   <link rel="canonical" href="https://shakh-i-mat.vercel.app/credits.html">
   <meta property="og:url" content="https://shakh-i-mat.vercel.app/credits.html">
   <meta property="og:image" content="https://shakh-i-mat.vercel.app/assets/images/og-image.jpg">
@@ -92,81 +92,70 @@
   </header>
 
   <main id="main" class="mx-auto w-full max-w-container px-4 pb-20 pt-10 sm:px-8 md:pt-14">
-    <h1 class="font-heading text-[2rem] font-bold leading-tight tracking-tight md:text-[2.75rem]">Джерела фото та медіа</h1>
-    <p class="mt-3 max-w-[65ch] text-lg text-muted">Фотографії ігор взято з Wikimedia Commons за вільними ліцензіями Creative Commons. Фото показуються з серверів Wikimedia без змін.</p>
-    <div class="mt-8 overflow-x-auto rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8">
-      <table class="w-full min-w-[640px] text-left">
-        <thead><tr class="border-b border-line text-sm text-muted"><th class="py-2 pr-4" scope="col">Фото</th><th class="py-2 pr-4" scope="col">Гра</th><th class="py-2 pr-4" scope="col">Автор</th><th class="py-2 pr-4" scope="col">Ліцензія</th><th class="py-2" scope="col">Джерело</th></tr></thead>
-        <tbody>
-          <tr class="border-b border-line">
-            <td class="py-3 pr-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_game_Staunton_No._6.jpg/500px-Chess_game_Staunton_No._6.jpg" alt="" width="500" height="307" loading="lazy" class="h-14 w-20 rounded-lg object-cover"></td>
+    <h1 class="font-heading text-[2rem] font-bold leading-tight tracking-tight md:text-[2.75rem]">Джерела зображень та медіа</h1>
+    <p class="mt-3 max-w-[65ch] text-lg text-muted">Усі зображення ігор, відео з шаховим конем і заставки створено для цього проєкту в Leonardo AI (модель Lucid Origin, формат 16:9). Стокові фото не використовуються.</p>
+    <section id="ai-images" class="mt-8 scroll-mt-28 rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8" aria-labelledby="ai-images-title">
+      <h2 id="ai-images-title" class="text-2xl font-semibold">Промпти зображень ігор</h2>
+      <p class="mt-3 text-muted">Кожен промпт складається з опису гри (у таблиці) і спільної частини, яка задає однаковий стиль усіх карток:</p>
+      <p class="mt-3 rounded-xl border border-line bg-night-deep/60 p-4 text-sm">Photorealistic close-up photo of the game in progress on a wooden table in a cozy student dormitory room in the evening, warm desk-lamp light with soft neon pink and teal accent lights in the blurred background, three-quarter top-down angle, shallow depth of field, rich detail. No text, no readable letters, no logos, no brand names, no game box, no faces.</p>
+      <p class="mt-3 text-sm text-muted">Назв ігор у промптах навмисно немає: так модель не відтворює чужі логотипи й оформлення коробок.</p>
+      <div class="mt-6 overflow-x-auto">
+        <table class="w-full min-w-[640px] text-left">
+          <thead><tr class="border-b border-line text-sm text-muted"><th class="py-2 pr-4" scope="col">Зображення</th><th class="py-2 pr-4" scope="col">Гра</th><th class="py-2" scope="col">Опис у промпті</th></tr></thead>
+          <tbody>
+          <tr class="border-b border-line align-top">
+            <td class="py-3 pr-4"><img src="assets/images/games/chess-500.webp" alt="" width="500" height="286" loading="lazy" decoding="async" class="h-14 w-20 rounded-lg object-cover"></td>
             <td class="py-3 pr-4 font-semibold">Шахи</td>
-            <td class="py-3 pr-4">Wilfredor</td>
-            <td class="py-3 pr-4">CC0</td>
-            <td class="py-3"><a class="text-secondary underline-offset-4 hover:underline" href="https://commons.wikimedia.org/wiki/File:Chess_game_Staunton_No._6.jpg" target="_blank" rel="noopener">Сторінка файлу</a></td>
+            <td class="py-3 text-sm text-muted">A classic wooden chess set mid-game on a chessboard, a few captured pieces lying beside the board.</td>
           </tr>
-          <tr class="border-b border-line">
-            <td class="py-3 pr-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Carcassonne_in_Kaisla.jpg/500px-Carcassonne_in_Kaisla.jpg" alt="" width="500" height="375" loading="lazy" class="h-14 w-20 rounded-lg object-cover"></td>
+          <tr class="border-b border-line align-top">
+            <td class="py-3 pr-4"><img src="assets/images/games/carcassonne-500.webp" alt="" width="500" height="286" loading="lazy" decoding="async" class="h-14 w-20 rounded-lg object-cover"></td>
             <td class="py-3 pr-4 font-semibold">Каркассон</td>
-            <td class="py-3 pr-4">JIP</td>
-            <td class="py-3 pr-4">CC BY-SA 4.0</td>
-            <td class="py-3"><a class="text-secondary underline-offset-4 hover:underline" href="https://commons.wikimedia.org/wiki/File:Carcassonne_in_Kaisla.jpg" target="_blank" rel="noopener">Сторінка файлу</a></td>
+            <td class="py-3 text-sm text-muted">A tile-laying medieval landscape board game: square tiles forming roads, small walled cities and green fields, small colorful wooden meeple figures standing on the tiles.</td>
           </tr>
-          <tr class="border-b border-line">
-            <td class="py-3 pr-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pandemic_board_game.jpg/500px-Pandemic_board_game.jpg" alt="" width="500" height="375" loading="lazy" class="h-14 w-20 rounded-lg object-cover"></td>
+          <tr class="border-b border-line align-top">
+            <td class="py-3 pr-4"><img src="assets/images/games/pandemic-500.webp" alt="" width="500" height="286" loading="lazy" decoding="async" class="h-14 w-20 rounded-lg object-cover"></td>
             <td class="py-3 pr-4 font-semibold">Пандемія</td>
-            <td class="py-3 pr-4">Padaguan</td>
-            <td class="py-3 pr-4">CC BY-SA 4.0</td>
-            <td class="py-3"><a class="text-secondary underline-offset-4 hover:underline" href="https://commons.wikimedia.org/wiki/File:Pandemic_board_game.jpg" target="_blank" rel="noopener">Сторінка файлу</a></td>
+            <td class="py-3 text-sm text-muted">A cooperative strategy board game: a world map board with glowing city points connected by lines, small colored disease cubes, colored pawns and neat stacks of cards.</td>
           </tr>
-          <tr class="border-b border-line">
-            <td class="py-3 pr-4"><img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Taboo_02.jpg" alt="" width="405" height="336" loading="lazy" class="h-14 w-20 rounded-lg object-cover"></td>
+          <tr class="border-b border-line align-top">
+            <td class="py-3 pr-4"><img src="assets/images/games/taboo-500.webp" alt="" width="500" height="286" loading="lazy" decoding="async" class="h-14 w-20 rounded-lg object-cover"></td>
             <td class="py-3 pr-4 font-semibold">Табу</td>
-            <td class="py-3 pr-4">FH (французька Вікіпедія)</td>
-            <td class="py-3 pr-4">CC BY-SA 1.0</td>
-            <td class="py-3"><a class="text-secondary underline-offset-4 hover:underline" href="https://commons.wikimedia.org/wiki/File:Taboo_02.jpg" target="_blank" rel="noopener">Сторінка файлу</a></td>
+            <td class="py-3 text-sm text-muted">A party word-guessing card game: a stack of cards with illegible tiny print, a small sand timer and a red squeeze buzzer on the table.</td>
           </tr>
-          <tr class="border-b border-line">
-            <td class="py-3 pr-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Monopoly_board_game.jpg/500px-Monopoly_board_game.jpg" alt="" width="500" height="375" loading="lazy" class="h-14 w-20 rounded-lg object-cover"></td>
+          <tr class="border-b border-line align-top">
+            <td class="py-3 pr-4"><img src="assets/images/games/monopoly-500.webp" alt="" width="500" height="286" loading="lazy" decoding="async" class="h-14 w-20 rounded-lg object-cover"></td>
             <td class="py-3 pr-4 font-semibold">Монополія</td>
-            <td class="py-3 pr-4">Yahya</td>
-            <td class="py-3 pr-4">CC BY-SA 4.0</td>
-            <td class="py-3"><a class="text-secondary underline-offset-4 hover:underline" href="https://commons.wikimedia.org/wiki/File:Monopoly_board_game.jpg" target="_blank" rel="noopener">Сторінка файлу</a></td>
+            <td class="py-3 text-sm text-muted">A property-trading board game: a square board with colored property spaces along the edges, small green plastic houses and red hotels, two white dice and play money with no readable print.</td>
           </tr>
-          <tr class="border-b border-line">
-            <td class="py-3 pr-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dixit_game_0001.jpg/500px-Dixit_game_0001.jpg" alt="" width="500" height="333" loading="lazy" class="h-14 w-20 rounded-lg object-cover"></td>
+          <tr class="border-b border-line align-top">
+            <td class="py-3 pr-4"><img src="assets/images/games/dixit-500.webp" alt="" width="500" height="286" loading="lazy" decoding="async" class="h-14 w-20 rounded-lg object-cover"></td>
             <td class="py-3 pr-4 font-semibold">Діксіт</td>
-            <td class="py-3 pr-4">yoppy</td>
-            <td class="py-3 pr-4">CC BY 2.0</td>
-            <td class="py-3"><a class="text-secondary underline-offset-4 hover:underline" href="https://commons.wikimedia.org/wiki/File:Dixit_game_0001.jpg" target="_blank" rel="noopener">Сторінка файлу</a></td>
+            <td class="py-3 text-sm text-muted">A storytelling card game: large cards with dreamlike surreal original illustrations (floating islands, a giant moon, a key in the clouds), small wooden rabbit-shaped score tokens on a scoring track.</td>
           </tr>
-          <tr class="border-b border-line">
-            <td class="py-3 pr-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Settlers_of_Catan_completed.jpg/500px-Settlers_of_Catan_completed.jpg" alt="" width="500" height="315" loading="lazy" class="h-14 w-20 rounded-lg object-cover"></td>
+          <tr class="border-b border-line align-top">
+            <td class="py-3 pr-4"><img src="assets/images/games/catan-500.webp" alt="" width="500" height="286" loading="lazy" decoding="async" class="h-14 w-20 rounded-lg object-cover"></td>
             <td class="py-3 pr-4 font-semibold">Катан</td>
-            <td class="py-3 pr-4">Fritzmann2002</td>
-            <td class="py-3 pr-4">CC BY-SA 4.0</td>
-            <td class="py-3"><a class="text-secondary underline-offset-4 hover:underline" href="https://commons.wikimedia.org/wiki/File:Settlers_of_Catan_completed.jpg" target="_blank" rel="noopener">Сторінка файлу</a></td>
+            <td class="py-3 text-sm text-muted">A hexagon-tile settlement board game: an island made of hex tiles (forest, wheat fields, clay hills, mountains, pasture), small wooden roads, houses and round number tokens.</td>
           </tr>
-          <tr class="border-b border-line">
-            <td class="py-3 pr-4"><img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Dobble_jeu.jpg" alt="" width="750" height="513" loading="lazy" class="h-14 w-20 rounded-lg object-cover"></td>
+          <tr class="border-b border-line align-top">
+            <td class="py-3 pr-4"><img src="assets/images/games/dobble-500.webp" alt="" width="500" height="286" loading="lazy" decoding="async" class="h-14 w-20 rounded-lg object-cover"></td>
             <td class="py-3 pr-4 font-semibold">Доббл</td>
-            <td class="py-3 pr-4">zizou man</td>
-            <td class="py-3 pr-4">CC BY 2.0</td>
-            <td class="py-3"><a class="text-secondary underline-offset-4 hover:underline" href="https://commons.wikimedia.org/wiki/File:Dobble_jeu.jpg" target="_blank" rel="noopener">Сторінка файлу</a></td>
+            <td class="py-3 text-sm text-muted">A fast pattern-matching party game: round cards each covered with many small colorful symbols (anchor, snowflake, cactus, sun, key), a round tin box and hands reaching for the cards.</td>
           </tr>
-          <tr class="border-b border-line">
-            <td class="py-3 pr-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Codenames_board_game.jpg/500px-Codenames_board_game.jpg" alt="" width="500" height="375" loading="lazy" class="h-14 w-20 rounded-lg object-cover"></td>
+          <tr class="border-b border-line align-top">
+            <td class="py-3 pr-4"><img src="assets/images/games/codenames-500.webp" alt="" width="500" height="286" loading="lazy" decoding="async" class="h-14 w-20 rounded-lg object-cover"></td>
             <td class="py-3 pr-4 font-semibold">Коднеймс</td>
-            <td class="py-3 pr-4">JIP</td>
-            <td class="py-3 pr-4">CC BY-SA 3.0</td>
-            <td class="py-3"><a class="text-secondary underline-offset-4 hover:underline" href="https://commons.wikimedia.org/wiki/File:Codenames_board_game.jpg" target="_blank" rel="noopener">Сторінка файлу</a></td>
+            <td class="py-3 text-sm text-muted">A team word-spy party game: a 5x5 grid of word cards with illegible print, red and blue agent cards and a small stand holding a key card.</td>
           </tr>
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
+    </section>
     <section class="mt-8 rounded-3xl border border-line bg-surface p-6 shadow-card backdrop-blur-md sm:p-8" aria-labelledby="media-src">
       <h2 id="media-src" class="text-2xl font-semibold">Вбудовані медіа на головній</h2>
       <ul class="mt-4 flex list-disc flex-col gap-2 pl-5 text-muted">
+        <li>Відео з шаховим конем у Hero (темна й світла версії) — згенеровано в Leonardo AI.</li>
         <li>Відео «Топ-5 настільних ігор бестселерів» — YouTube-канал «Компашка».</li>
         <li>Віджет «Задача дня» — <a class="text-secondary underline-offset-4 hover:underline" href="https://lichess.org/training" target="_blank" rel="noopener">Lichess.org</a>.</li>
         <li>Карта — Google Maps.</li>

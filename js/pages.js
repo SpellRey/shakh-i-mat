@@ -156,7 +156,7 @@
         img.alt = g.alt;
         img.width = g.w;
         img.height = g.h;
-        img.title = `Фото: ${g.author}, ${g.license}`;
+        img.title = `Зображення: ${g.author}, ${g.license}`;
         item.querySelector('[data-slot="meta"]').textContent = `${g.genre} · ${g.players} гравців`;
         const link = item.querySelector('[data-slot="link"]');
         link.textContent = g.name;
@@ -248,11 +248,14 @@
         desc: g.desc, author: g.author, license: g.license,
       });
       const img = document.getElementById('game-photo');
+      // srcset замінюємо разом із src: інакше браузер і далі обирав би з srcset фото гри, вписаної в HTML за замовчуванням
+      img.srcset = g.srcset || '';
+      img.sizes = '(min-width: 1024px) 45vw, 100vw';
       img.src = g.img;
       img.alt = g.alt;
       img.width = g.w;
       img.height = g.h;
-      img.title = `Фото: ${g.author}, ${g.license}, Wikimedia Commons`;
+      img.title = `Зображення: ${g.author}, ${g.license}`;
       document.getElementById('photo-source').href = g.src;
       links({ game: g.id, genre: g.genre });
 
